@@ -24,14 +24,14 @@ const createJob = asyncHandler(async (req, res) => {
 
     if (!category) {
         //importante este "return", así si no encuentra la categoría a la que pertenece el job se sale y no lo crea
-        return res.status(400).json({ message: "Ha ocurrido un error al buscar la categoria. No se ha creado el objeto." });
+        return res.status(400).json({ message: "Ha ocurrido un error al buscar la categoria. No se ha creado el trabajo." });
     }
 
     const nuevoTrabajo = await new Job(JobData);
     await nuevoTrabajo.save();
 
     if (!nuevoTrabajo) {
-        res.status(400).json({ message: "Ha ocurrido un error al crear el trabajo." });
+        return res.status(400).json({ message: "Ha ocurrido un error al crear el trabajo." });
     }
 
     await category.addJob(nuevoTrabajo._id);
