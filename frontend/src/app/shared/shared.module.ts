@@ -5,14 +5,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 //SEARCH
 // import { SearchComponent } from '../shared/search/search.component';
-import { ShowAuthedDirective } from './show-authed.directive';
-//CATEGORIAS
-import { ListCategoriesComponent } from '../shared/list-categories/list-categories.component';
-import { CardCategoryComponent } from '../shared/card-category/card-category.component';
+// import { ShowAuthedDirective } from './show-authed.directive';
+// //CATEGORIAS
+// import { ListCategoriesComponent } from '../shared/list-categories/list-categories.component';
+// import { CardCategoryComponent } from '../shared/card-category/card-category.component';
 
-//JOBS
-import { ListJobsComponent } from './list-jobs/list-jobs.component';
-import { CardJobComponent } from './card-job/card-job.component';
+// //JOBS
+// import { ListJobsComponent } from './list-jobs/list-jobs.component';
+// import { CardJobComponent } from './card-job/card-job.component';
 //Carousel
 // import { CarouselItemsComponent } from './carousel-items/carousel-items.component';
 // import { CarouselComponent } from './carousel/carousel.component';
@@ -29,50 +29,50 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        RouterModule,
-        NgbModule,
-        InfiniteScrollModule,
-    ],
-    declarations: [
-        ListCategoriesComponent,
-        CardCategoryComponent,
-        ListJobsComponent,
-        CardJobComponent,
-        // CarouselItemsComponent,
-        // CarouselComponent,
-        // FiltersComponent,
-        // SearchComponent,
-        ShowAuthedDirective,
-        // FavoriteButtonComponent,
-        // FollowButtonComponent,
-        // CommentsComponent,
-        // ListJobsOnProfileComponent,
-        // FollowListComponent
+     imports: [
+          CommonModule,
+          FormsModule,
+          ReactiveFormsModule,
+          HttpClientModule,
+          RouterModule,
+          NgbModule,
+          InfiniteScrollModule,
+     ],
+     declarations: [
+          // ListCategoriesComponent,
+          // CardCategoryComponent,
+          // ListJobsComponent,
+          // CardJobComponent,
+          // CarouselItemsComponent,
+          // CarouselComponent,
+          // FiltersComponent,
+          // SearchComponent,
+          // ShowAuthedDirective,
+          // FavoriteButtonComponent,
+          // FollowButtonComponent,
+          // CommentsComponent,
+          // ListJobsOnProfileComponent,
+          // FollowListComponent
 
-    ],
-    exports: [
-        ListCategoriesComponent,
-        ListJobsComponent,
-        FormsModule,
-        ReactiveFormsModule,
-        CardJobComponent,
-        CardCategoryComponent,
-        // CarouselItemsComponent,
-        // CarouselComponent,
-        // FiltersComponent,
-        // SearchComponent,
-        ShowAuthedDirective,
-        // FavoriteButtonComponent,
-        // FollowButtonComponent,
-        // CommentsComponent,
-        // ListJobsOnProfileComponent,
-        // FollowListComponent
-    ],
+     ],
+     exports: [
+          // ListCategoriesComponent,
+          // ListJobsComponent,
+          // FormsModule,
+          // ReactiveFormsModule,
+          // CardJobComponent,
+          // CardCategoryComponent,
+          // CarouselItemsComponent,
+          // CarouselComponent,
+          // FiltersComponent,
+          // SearchComponent,
+          // ShowAuthedDirective,
+          // FavoriteButtonComponent,
+          // FollowButtonComponent,
+          // CommentsComponent,
+          // ListJobsOnProfileComponent,
+          // FollowListComponent
+     ],
 })
 
 export class SharedModule { }
