@@ -1,18 +1,24 @@
-.header-container {
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-     background-color: #1E262D;
-     /* Color de fondo para la barra de navegación */
-     padding: 10px 20px;
-     color: white;
+/* frontend/src/app/shared/layout/header/header.component.css */
+.custom-logo {
+     font-size: 3rem;
+     /* Tamaño de fuente más grande */
+     font-weight: bold;
+     color: #00aaff;
+     /* Color azul más claro */
+     text-decoration: none;
+     font-family: 'Arial', sans-serif;
+     /* Cambia la fuente a Arial */
+     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+     /* Añade sombra al texto */
+     transition: color 0.3s ease, transform 0.3s ease;
+     /* Transición suave */
 }
 
-.logo a {
-     font-size: 24px;
-     font-weight: bold;
-     color: #f39c12;
-     text-decoration: none;
+.custom-logo:hover {
+     color: #0088cc;
+     /* Color azul más oscuro al pasar el ratón */
+     transform: scale(1.1);
+     /* Aumenta ligeramente el tamaño al pasar el ratón */
 }
 
 .nav-links {
@@ -28,7 +34,8 @@
 .nav-links a {
      color: white;
      text-decoration: none;
-     font-size: 18px;
+     font-size: 1.2rem;
+     /* Ajusta el tamaño de la fuente */
      transition: color 0.3s;
 }
 

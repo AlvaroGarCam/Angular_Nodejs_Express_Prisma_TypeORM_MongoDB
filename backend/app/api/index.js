@@ -7,10 +7,8 @@ const dotenv = require("dotenv");
 const app = express();
 dotenv.config();
 
-// Habilita CORS para todas las rutas
-const corsOptions = {
-   origin: process.env.CORSURL,
-   optionsSuccessStatus: 200
+var corsOptions = {
+   origin: "http://localhost:4200"
 };
 
 app.use(cors(corsOptions));

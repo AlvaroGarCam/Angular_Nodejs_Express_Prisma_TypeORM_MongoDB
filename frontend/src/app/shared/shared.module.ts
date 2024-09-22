@@ -7,8 +7,8 @@ import { RouterModule } from '@angular/router';
 // import { SearchComponent } from '../shared/search/search.component';
 // import { ShowAuthedDirective } from './show-authed.directive';
 // //CATEGORIAS
-// import { ListCategoriesComponent } from '../shared/list-categories/list-categories.component';
-// import { CardCategoryComponent } from '../shared/card-category/card-category.component';
+import { ListCategoriesComponent } from '../shared/list-categories/list-categories.component';
+import { CardCategoryComponent } from '../shared/card-category/card-category.component';
 
 // //JOBS
 // import { ListJobsComponent } from './list-jobs/list-jobs.component';
@@ -39,8 +39,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
           InfiniteScrollModule,
      ],
      declarations: [
-          // ListCategoriesComponent,
-          // CardCategoryComponent,
+          ListCategoriesComponent,
+          CardCategoryComponent,
           // ListJobsComponent,
           // CardJobComponent,
           // CarouselItemsComponent,
@@ -56,12 +56,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 
      ],
      exports: [
-          // ListCategoriesComponent,
+          ListCategoriesComponent,
           // ListJobsComponent,
           // FormsModule,
           // ReactiveFormsModule,
           // CardJobComponent,
-          // CardCategoryComponent,
+          CardCategoryComponent,
           // CarouselItemsComponent,
           // CarouselComponent,
           // FiltersComponent,
