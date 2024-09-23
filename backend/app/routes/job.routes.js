@@ -18,9 +18,12 @@ module.exports = (app) => {
     // Delete a Note with noteId
     app.delete('/jobs/:slug', jobs.deleteOneJob);
 
-    //get jobs by category
+    //get one categories
     app.get('/categories/:slug', jobs.GetjobsByCategory);
     // app.get('/categories/:slug', verifyJWTOptional, jobs.GetjobsByCategory);
+
+    //get all jobs by category slug
+    app.get('/categories/:slug/jobs', jobs.getJobsByCategorySlug); // Nueva ruta
 
     //Favorite
     // app.post('/:slug/favorite', verifyJWT, jobs.favouriteJob);

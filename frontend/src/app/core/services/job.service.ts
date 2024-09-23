@@ -33,44 +33,47 @@ export class Jobservice {
         return this.http.get<Job>(`${URL}/${slug}`);
     }
 
-    // //CREATE
-    // create_job(job: Job): Observable<Job[]> {
-    //     return this.http.post<Job[]>(URL, job);
-    // }
+    //CREATE
+    create_job(job: Job): Observable<Job[]> {
+        return this.http.post<Job[]>(URL, job);
+    }
 
-    // //UPDATE ONE
-    // update_job(job: Job, slug: String): Observable<Job[]> {
-    //     return this.http.put<Job[]>(`${URL}/${slug}`, job);
-    // }
+    //UPDATE ONE
+    update_job(job: Job, slug: String): Observable<Job[]> {
+        return this.http.put<Job[]>(`${URL}/${slug}`, job);
+    }
 
-    // //DELETE ONE
-    // delete_job(slug: any): Observable<Job[]> {
-    //     return this.http.delete<Job[]>(`${URL}/${slug}`);
-    // }
+    //DELETE ONE
+    delete_job(slug: any): Observable<Job[]> {
+        return this.http.delete<Job[]>(`${URL}/${slug}`);
+    }
 
-    // //DELETE ALL
-    // delete_all_jobs(): Observable<Job[]> {
-    //     return this.http.delete<Job[]>(`${URL}`);
-    // }
+    //DELETE ALL
+    delete_all_jobs(): Observable<Job[]> {
+        return this.http.delete<Job[]>(`${URL}`);
+    }
 
     getJobsByCategory(slug: String): Observable<Job[]> {
         return this.http.get<Job[]>(`${URLcat}/${slug}`);
     }
 
-    // //SEARCH
-    // find_job_name(search: string): Observable<any> {
-    //     return this.http.get<Job>(`${URL}?name=${search}`).pipe(
-    //         map((data) => {
-    //             return data;
-    //         })
-    //     );
-    // }
+    getJobsByCategorySlug(slug: String): Observable<Job[]> {
+        return this.http.get<Job[]>(`${URLcat}/${slug}/jobs`);
+    }
+    //SEARCH
+    find_job_name(search: string): Observable<any> {
+        return this.http.get<Job>(`${URL}?name=${search}`).pipe(
+            map((data) => {
+                return data;
+            })
+        );
+    }
 
-    // favorite(id: String): Observable<any> {
-    //     return this.http.post(`${URLfav}/${id}/favorite`, {})
-    // }
+    favorite(id: String): Observable<any> {
+        return this.http.post(`${URLfav}/${id}/favorite`, {})
+    }
 
-    // unfavorite(id: String): Observable<any> {
-    //     return this.http.delete(`${URLfav}/${id}/favorite`)
-    // }
+    unfavorite(id: String): Observable<any> {
+        return this.http.delete(`${URLfav}/${id}/favorite`)
+    }
 }

@@ -11,8 +11,8 @@ import { ListCategoriesComponent } from '../shared/list-categories/list-categori
 import { CardCategoryComponent } from '../shared/card-category/card-category.component';
 
 // //JOBS
-// import { ListJobsComponent } from './list-jobs/list-jobs.component';
-// import { CardJobComponent } from './card-job/card-job.component';
+import { ListJobsComponent } from './list-jobs/list-jobs.component';
+import { CardJobComponent } from './card-job/card-job.component';
 //Carousel
 // import { CarouselItemsComponent } from './carousel-items/carousel-items.component';
 // import { CarouselComponent } from './carousel/carousel.component';
@@ -41,8 +41,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
      declarations: [
           ListCategoriesComponent,
           CardCategoryComponent,
-          // ListJobsComponent,
-          // CardJobComponent,
+          ListJobsComponent,
+          CardJobComponent,
           // CarouselItemsComponent,
           // CarouselComponent,
           // FiltersComponent,
@@ -57,10 +57,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
      ],
      exports: [
           ListCategoriesComponent,
-          // ListJobsComponent,
+          ListJobsComponent,
           // FormsModule,
           // ReactiveFormsModule,
-          // CardJobComponent,
+          CardJobComponent,
           CardCategoryComponent,
           // CarouselItemsComponent,
           // CarouselComponent,

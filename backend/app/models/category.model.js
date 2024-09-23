@@ -20,7 +20,7 @@ const category_schema = mongoose.Schema({
         type: String,
         required: true
     },
-    jobs: [{ type: mongoose.Schema.Types.ObjectId, ref: "job" }], //clave ajena a job
+    jobs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Job" }], // clave ajena a job
 });
 
 category_schema.plugin(uniqueValidator, { msg: "already taken" });
@@ -45,15 +45,6 @@ category_schema.methods.toCategoryResponse = function () {
         jobs: this.jobs,
     };
 };
-
-// category_schema.methods.toCategoryCarouselResponse = function () {
-//     return {
-//         slug: this.slug,
-//         image: this.image,
-//         category_name: this.category_name
-//     };
-// };
-
 
 category_schema.methods.addJob = function (job_id) {
     if (this.jobs.indexOf(job_id) === -1) {

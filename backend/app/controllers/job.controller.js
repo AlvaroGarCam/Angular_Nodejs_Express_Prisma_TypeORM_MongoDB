@@ -140,31 +140,40 @@ const deleteOneJob = asyncHandler(async (req, res) => {
     });
 });
 
-const GetjobsByCategory = asyncHandler(async (req, res) => {
-
-    // res.json("holaaa")
-    let offset = 0;
-    let limit = 3;
-    const slug = req.params;
-    let Job_count = "";
-
-    const category = await Category.findOne(slug).exec();
+// Obtener todos los trabajos por slug de categoría
+const getJobsByCategorySlug = asyncHandler(async (req, res) => {
+    const { slug } = req.params;
+    const category = await Category.findOne({ slug }).populate('jobs').exec();
 
     if (!category) {
-        res.status(400).json({ message: "Categoria no encontrada" });
+        return res.status(404).json({ message: 'Categoría no encontrada' });
     }
 
-    // const user = await User.findById(req.userId);
-
-    return await res.status(200).json({
-        jobs: await Promise.all(category.jobs.map(async JobId => {
-            const Trabajobj = await Job.findById(JobId).exec();
-            // const Trabajobj = await Job.findById(JobId).skip(offset).limit(limit).exec();
-            return await Trabajobj.toJobResponse();
-        })),
-        Job_count: Job_count
-    })
+    return res.status(200).json({ jobs: category.jobs });
 });
+
+
+const GetjobsByCategory = asyncHandler(async (req, res) => {
+    const slug = req.params.slug; // Asegúrate de obtener el slug correctamente
+    let Job_count = "";
+
+    const category = await Category.findOne({ slug }).exec();
+
+    if (!category) {
+        return res.status(400).json({ message: "Categoria no encontrada" });
+    }
+
+    const jobs = await Promise.all(category.jobs.map(async JobId => {
+        const Trabajobj = await Job.findById(JobId).exec();
+        return Trabajobj.toJobResponse();
+    }));
+
+    return res.status(200).json({
+        jobs: jobs,
+        Job_count: jobs.length // Actualiza el conteo de trabajos
+    });
+});
+
 
 // const favouriteJob = asyncHandler(async (req, res) => {
 
@@ -268,6 +277,7 @@ module.exports = {
     findOneJob,
     deleteOneJob,
     GetjobsByCategory,
+    getJobsByCategorySlug,
     // favouriteJob,
     // unfavoriteJob,
     updateJob
