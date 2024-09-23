@@ -96,21 +96,19 @@ const findAllJob = asyncHandler(async (req, res) => {
 });
 
 //findONE
-const findOneJob = asyncHandler(async (req, res) => {
-
-    const jobs = await Job.findOne(req.params)
-
-    // const user = await User.findById(req.userId);
-
-    if (!jobs) {
-        return res.status(401).json({
-            message: "Job Not Found"
-        });
+const findOneJob = async (req, res) => {
+    try {
+        const job = await Job.findOne({ slug: req.params.slug }).exec();
+        console.log('Job encontrado en el backend:', job); // Verifica el job aquí
+        if (!job) {
+            return res.status(404).json({ message: 'Job not found' });
+        }
+        res.status(200).json(job);
+    } catch (error) {
+        console.error('Error al obtener el job en el backend:', error);
+        res.status(500).json({ message: 'Error retrieving job', error });
     }
-    return res.status(200).json({
-        jobs: await jobs.toJobResponse()
-    })
-});
+};
 
 //DELETE ONE
 const deleteOneJob = asyncHandler(async (req, res) => {

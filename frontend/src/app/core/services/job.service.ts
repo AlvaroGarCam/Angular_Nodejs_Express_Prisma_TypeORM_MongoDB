@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable, of } from 'rxjs';
 import { Job } from '../models/job.model';
+import { tap } from 'rxjs/operators';
 // import { Filters } from '../models/filters.model';
 
 const URL = 'http://localhost:3000/jobs';
@@ -29,7 +30,7 @@ export class Jobservice {
     // }
 
     //GET ONE
-    get_job(slug: String): Observable<Job> {
+    get_job(slug: string): Observable<Job> {
         return this.http.get<Job>(`${URL}/${slug}`);
     }
 

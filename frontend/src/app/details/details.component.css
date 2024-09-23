@@ -1,0 +1,42 @@
+/* Clase personalizada para el borde azul claro */
+.border-light-blue {
+    border: 2px solid #add8e6;
+    /* Azul claro */
+}
+
+/* Clase personalizada para el fondo azul claro */
+.bg-light-blue {
+    background-color: #add8e6;
+    /* Azul claro */
+}
+
+/* Estilo adicional para mejorar la legibilidad del texto */
+.card-title {
+    font-size: 1.75rem;
+    font-weight: bold;
+}
+
+.job-bio {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.job-bio .company,
+.job-bio .description,
+.job-bio .salary {
+    margin-bottom: 10px;
+}
+
+.img-fluid {
+    max-height: 200px;
+    object-fit: cover;
+}
+
+.text-white {
+    color: #ffffff;
+}
+
+hr.my-4 {
+    border-top: 2px solid #004085;
+    /* Color y grosor de la línea horizontal */
+}
