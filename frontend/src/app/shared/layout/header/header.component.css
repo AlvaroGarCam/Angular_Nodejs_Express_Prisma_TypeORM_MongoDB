@@ -42,3 +42,29 @@
 .nav-links a:hover {
      color: #f39c12;
 }
+
+/* Fondo azul claro */
+.bg-light-blue {
+     background-color: #004085;
+     /* Azul claro */
+}
+
+/* Estilo bonito y redondeado para las letras */
+.custom-logo,
+.custom-nav-link {
+     font-family: 'Arial', sans-serif;
+     font-weight: bold;
+     border-radius: 5px;
+     padding: 5px 10px;
+     transition: background-color 0.3s ease;
+}
+
+/* Estilo distintivo para el encabezado */
+.custom-header {
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Efecto hover para los enlaces de navegación */
+.custom-nav-link:hover {
+     background-color: rgba(255, 255, 255, 0.2);
+}
