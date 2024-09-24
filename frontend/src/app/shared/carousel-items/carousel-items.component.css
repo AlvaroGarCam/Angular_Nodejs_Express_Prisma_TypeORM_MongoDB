@@ -1,77 +1,66 @@
+/* Estilo para suavizar las esquinas del carrusel */
 ngb-carousel {
+    border-radius: 10px;
+    /* Ajusta el valor según sea necesario */
+    overflow: hidden;
+    /* Asegura que las esquinas de los elementos internos también se recorten */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Añade una sombra para un efecto más elegante */
     max-width: 700px;
     margin: 50px auto;
 }
 
-.ngb-carousel {
+/* Estilo para suavizar las esquinas de las imágenes */
+.img_carousel {
     border-radius: 10px;
-    /* Suaviza las esquinas del carrusel */
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Ajusta el valor según sea necesario */
+    width: 100%;
+    /* Asegura que las imágenes ocupen todo el ancho del contenedor */
+    height: auto;
+    /* Mantiene la proporción de las imágenes */
+    display: block;
+    margin: 0 auto;
+    /* Centra las imágenes horizontalmente */
+    object-fit: cover;
+    /* Asegura que las imágenes cubran todo el contenedor sin distorsionarse */
 }
 
-ngb-carousel img {
-    width: 50%;
-    height: 60%;
-    outline: none;
-    border-radius: 10px;
-    /* Suaviza las esquinas de las imágenes */
-}
-
-ngb-carousel {
-    width: inherit;
-    height: inherit;
-}
-
-.carousel-inner {
-    overflow: visible;
-}
-
-.carousel-item {
-    display: flex !important;
-    opacity: 0;
-    /* visibility: hidden; */
-    transition: opacity 1.2s ease-in-out, visibility 1.2s;
-    z-index: -1;
-}
-
-.carousel-item.active {
-    opacity: 1;
-    visibility: visible;
-    z-index: 10;
-}
-
-.carousel-control-prev {
-    z-index: 20;
-    background-color: black;
-}
-
-.carousel-control-next {
-    z-index: 20;
-}
-
-.carousel-indicators {
-    z-index: 20;
-}
-
-/* .img_carousel{
-    display: flex !important;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 1.2s ease-in-out, visibility 1.2s;
-    z-index: -1;
-
-} */
+/* Centrar el contenido del carrusel */
 .contenedor {
-    text-align: center;
-    /* Centrar horizontalmente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 60vh;
     /* Ajusta la altura según sea necesario */
-    line-height: 50vh;
-    /* Centrar verticalmente */
+    text-align: center;
 }
 
-.contenedor img {
-    vertical-align: middle;
-    /* Centrar verticalmente */
+/* Estilo para los textos del carrusel */
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fondo semitransparente para mejorar la legibilidad */
+    border-radius: 5px;
+    /* Suaviza las esquinas del fondo del texto */
+    padding: 10px;
+    color: white;
+}
+
+/* Transición suave para las imágenes */
+.img_carousel {
+    transition: transform 0.3s ease-in-out;
+}
+
+.img_carousel:hover {
+    transform: scale(1.05);
+    /* Aumenta ligeramente el tamaño de la imagen al pasar el ratón por encima */
+}
+
+/* Transición suave para los textos */
+.carousel-caption {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.carousel-caption:hover {
+    opacity: 0.8;
+    /* Reduce ligeramente la opacidad del texto al pasar el ratón por encima */
 }
