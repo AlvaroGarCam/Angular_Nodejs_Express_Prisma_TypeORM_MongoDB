@@ -12,7 +12,6 @@ ngb-carousel {
 
 /* Estilo para suavizar las esquinas de las imágenes */
 .img_carousel {
-    border-radius: 10px;
     /* Ajusta el valor según sea necesario */
     width: 100%;
     /* Asegura que las imágenes ocupen todo el ancho del contenedor */

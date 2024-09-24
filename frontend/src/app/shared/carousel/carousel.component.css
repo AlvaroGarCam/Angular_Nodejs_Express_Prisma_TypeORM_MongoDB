@@ -1,9 +1,69 @@
-/* Estilo para suavizar las esquinas del componente app-carousel-items */
+/* Asegúrate de que el contenedor del carrusel ocupe todo el ancho de la página */
 app-carousel-items {
+     display: block;
+     width: 100%;
+     max-width: 100%;
+     margin: 0 auto;
+     padding: 0;
+}
+
+/* Asegúrate de que el carrusel interno ocupe todo el ancho del contenedor */
+.ngb-carousel {
+     width: 100%;
+     max-width: 100%;
      border-radius: 10px;
-     /* Ajusta el valor según sea necesario */
+     /* Suaviza las esquinas del carrusel */
      overflow: hidden;
-     /* Asegura que las esquinas de los elementos internos también se recorten */
      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
      /* Añade una sombra para un efecto más elegante */
+}
+
+/* Asegúrate de que las imágenes dentro del carrusel ocupen todo el ancho del contenedor */
+.img_carousel {
+     width: 100%;
+     height: auto;
+     border-radius: 10px;
+     /* Suaviza las esquinas de las imágenes */
+     object-fit: cover;
+     /* Asegura que las imágenes cubran todo el contenedor sin distorsionarse */
+}
+
+/* Centrar el contenido del carrusel */
+.contenedor {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     height: 60vh;
+     /* Ajusta la altura según sea necesario */
+     text-align: center;
+}
+
+/* Estilo para los textos del carrusel */
+.carousel-caption {
+     background-color: rgba(0, 0, 0, 0.5);
+     /* Fondo semitransparente para mejorar la legibilidad */
+     border-radius: 5px;
+     /* Suaviza las esquinas del fondo del texto */
+     padding: 10px;
+     color: white;
+}
+
+/* Transición suave para las imágenes */
+.img_carousel {
+     transition: transform 0.3s ease-in-out;
+}
+
+.img_carousel:hover {
+     transform: scale(1.05);
+     /* Aumenta ligeramente el tamaño de la imagen al pasar el ratón por encima */
+}
+
+/* Transición suave para los textos */
+.carousel-caption {
+     transition: opacity 0.3s ease-in-out;
+}
+
+.carousel-caption:hover {
+     opacity: 0.8;
+     /* Reduce ligeramente la opacidad del texto al pasar el ratón por encima */
 }

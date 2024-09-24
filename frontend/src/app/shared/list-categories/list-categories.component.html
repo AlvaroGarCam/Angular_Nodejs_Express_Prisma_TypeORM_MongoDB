@@ -1,7 +1,7 @@
 <div class="container mt-5">
      <div class="row">
           <div class="col-lg-4 col-md-6 col-sm-12 mb-4" *ngFor="let category of categories">
-               <div class="categorias" infinite-scroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50"
+               <div class="categorias" infinite-scroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="1000"
                     (scrolled)="scroll()">
                     <app-card-category class="item" [categories]="category"></app-card-category>
                </div>
