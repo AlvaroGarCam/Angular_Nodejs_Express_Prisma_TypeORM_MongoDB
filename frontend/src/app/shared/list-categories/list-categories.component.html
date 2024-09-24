@@ -1,9 +1,10 @@
 <div class="container mt-5">
      <div class="row">
           <div class="col-lg-4 col-md-6 col-sm-12 mb-4" *ngFor="let category of categories">
-               <app-card-category [categories]="category"></app-card-category>
+               <div class="categorias" infinite-scroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50"
+                    (scrolled)="scroll()">
+                    <app-card-category class="item" [categories]="category"></app-card-category>
+               </div>
           </div>
      </div>
 </div>
-
-<!-- <p>list-categories is alive!!!</p> -->

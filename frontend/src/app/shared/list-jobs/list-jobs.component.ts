@@ -21,8 +21,8 @@ export class ListJobsComponent implements OnInit {
   slug_Category!: string | null;
   listCategories: Category[] = [];
   // filters = new Filters();
-  // offset: number = 0;
-  // limit: number = 3;
+  offset: number = 0;
+  limit: number = 3;
   // totalPages: Array<number> = [];
   // currentPage: number = 1;
 

@@ -9,8 +9,8 @@ import { Category } from '../../core/models/category.model';
 })
 export class ListCategoriesComponent implements OnInit {
 
-  // offset = 0;
-  // limit = 4;
+  offset = 0;
+  limit = 4;
   categories: Category[] = [];
 
   constructor(private CategoryService: CategoryService) { }
@@ -23,23 +23,23 @@ export class ListCategoriesComponent implements OnInit {
 
   // TOTES LES CATEGORIES
   getCategories() {
-    // const params = this.getRequestParams(this.offset, this.limit);
-    const params = this.getRequestParams();
+    const params = this.getRequestParams(this.offset, this.limit);
+
     this.CategoryService.all_categories(params).subscribe(
       (data: any) => {
         this.categories = data.categories;
-        // this.limit = this.limit + 4;
-        console.log(this.categories);
+        this.limit = this.limit + 4;
+        // console.log(this.categories);      
       }
     );
   }
 
   // getRequestParams(offset: number, limit: number): any {
-  getRequestParams(): any {
+  getRequestParams(offset: number, limit: number): any {
     let params: any = {};
 
-    // params[`offset`] = offset;
-    // params[`limit`] = limit;
+    params[`offset`] = offset;
+    params[`limit`] = limit;
 
     return params;
   }
@@ -47,4 +47,6 @@ export class ListCategoriesComponent implements OnInit {
   scroll() {
     this.getCategories();
   }
+
+
 }
