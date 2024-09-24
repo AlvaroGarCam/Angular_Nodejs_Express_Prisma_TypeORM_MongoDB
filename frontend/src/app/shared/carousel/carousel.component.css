@@ -1,0 +1,9 @@
+/* Estilo para suavizar las esquinas del componente app-carousel-items */
+app-carousel-items {
+     border-radius: 10px;
+     /* Ajusta el valor según sea necesario */
+     overflow: hidden;
+     /* Asegura que las esquinas de los elementos internos también se recorten */
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+     /* Añade una sombra para un efecto más elegante */
+}

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Job } from '../core/models/job.model';
 import { Jobservice } from '../core/services/job.service';
 import { ActivatedRoute, Router } from '@angular/router';
-
+// import { CarouselDetails } from '../core/models/carousel.model';
 @Component({
     selector: 'app-details',
     templateUrl: './details.component.html',
@@ -12,6 +12,7 @@ export class DetailsComponent implements OnInit {
 
     job: Job | null = null;
     slug: string | null = null;
+    // @Input() page!: CarouselDetails[];
 
     constructor(
         private route: ActivatedRoute,

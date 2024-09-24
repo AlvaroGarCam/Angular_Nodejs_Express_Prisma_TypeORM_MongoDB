@@ -14,8 +14,8 @@ import { CardCategoryComponent } from '../shared/card-category/card-category.com
 import { ListJobsComponent } from './list-jobs/list-jobs.component';
 import { CardJobComponent } from './card-job/card-job.component';
 //Carousel
-// import { CarouselItemsComponent } from './carousel-items/carousel-items.component';
-// import { CarouselComponent } from './carousel/carousel.component';
+import { CarouselItemsComponent } from './carousel-items/carousel-items.component';
+import { CarouselComponent } from './carousel/carousel.component';
 
 import { InfiniteScrollModule } from "ngx-infinite-scroll";
 // import { FiltersComponent } from './filters/filters.component';
@@ -43,8 +43,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
           CardCategoryComponent,
           ListJobsComponent,
           CardJobComponent,
-          // CarouselItemsComponent,
-          // CarouselComponent,
+          CarouselItemsComponent,
+          CarouselComponent,
           // FiltersComponent,
           // SearchComponent,
           // ShowAuthedDirective,
@@ -62,8 +62,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
           // ReactiveFormsModule,
           CardJobComponent,
           CardCategoryComponent,
-          // CarouselItemsComponent,
-          // CarouselComponent,
+          CarouselItemsComponent,
+          CarouselComponent,
           // FiltersComponent,
           // SearchComponent,
           // ShowAuthedDirective,
