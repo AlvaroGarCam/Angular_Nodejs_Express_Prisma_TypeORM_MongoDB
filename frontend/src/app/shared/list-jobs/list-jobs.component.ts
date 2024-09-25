@@ -16,9 +16,9 @@ import { Location } from '@angular/common';
 export class ListJobsComponent implements OnInit {
 
   //Declaracions
-  routeFilters!: string | null;
+  // routeFilters!: string | null;
   jobs: Job[] = [];
-  slug_Category!: string | null;
+  slug_Category: string | null = null;
   listCategories: Category[] = [];
   // filters = new Filters();
   offset: number = 0;
@@ -39,7 +39,6 @@ export class ListJobsComponent implements OnInit {
 
   //Lo que inicia
   ngOnInit(): void {
-    console.log()
     this.slug_Category = this.ActivatedRoute.snapshot.paramMap.get('slug');
     // this.routeFilters = this.ActivatedRoute.snapshot.paramMap.get('filters');
     // console.log(this.ActivatedRoute.snapshot.paramMap.get('filters'));
@@ -66,14 +65,10 @@ export class ListJobsComponent implements OnInit {
 
   get_all_jobs(): void {
     this.jobservice.get_jobs().subscribe(
-      (data: any) => {
+      (data: Job[]) => {
         console.log(data); // Verifica la estructura de la respuesta aquí
-        if (data && data.jobs) {
-          this.jobs = data.jobs;
-          console.log(this.jobs);
-        } else {
-          console.error('La respuesta no contiene la propiedad jobs:', data);
-        }
+        this.jobs = data;
+        console.log(this.jobs);
       },
       (error) => {
         console.error('Error al obtener los trabajos:', error);
@@ -81,9 +76,7 @@ export class ListJobsComponent implements OnInit {
     );
   }
 
-  //COGER jobs POR CATEGORIA
   get_jobs_by_cat(): void {
-
     if (this.slug_Category !== null) {
       this.jobservice.getJobsByCategorySlug(this.slug_Category).subscribe(
         (data: any) => {

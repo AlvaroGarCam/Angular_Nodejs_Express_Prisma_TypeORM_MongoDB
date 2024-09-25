@@ -13,7 +13,7 @@
 <ngb-carousel *ngIf="page === 'details'" style="background-color: #004085">
 	<ng-template *ngFor="let item of jobs_details;" ngbSlide>
 		<div class="picsum-img-wrapper contenedor">
-			<img class="img_carousel" src="../../../{{item}}" />
+			<img class="img_carousel" src="{{item}}" />
 		</div>
 	</ng-template>
 </ngb-carousel>

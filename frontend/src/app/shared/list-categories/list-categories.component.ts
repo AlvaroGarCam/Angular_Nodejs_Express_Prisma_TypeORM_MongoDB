@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryService } from '../../core/services/category.service'
+import { CategoryService } from '../../core/services/category.service';
 import { Category } from '../../core/models/category.model';
 
 @Component({
@@ -10,43 +10,46 @@ import { Category } from '../../core/models/category.model';
 export class ListCategoriesComponent implements OnInit {
 
   offset = 0;
-  limit = 4;
+  limit = 3;
   categories: Category[] = [];
+  hasMore = true; // Bandera para indicar si hay más categorías para cargar
 
-  constructor(private CategoryService: CategoryService) { }
-
-  //INICIA 
+  constructor(private categoryService: CategoryService) { }
 
   ngOnInit(): void {
     this.getCategories();
   }
 
-  // TOTES LES CATEGORIES
   getCategories() {
+    if (!this.hasMore) return; // Si no hay más categorías, no hacer nada
+
     const params = this.getRequestParams(this.offset, this.limit);
 
-    this.CategoryService.all_categories(params).subscribe(
+    this.categoryService.all_categories(params).subscribe(
       (data: any) => {
-        this.categories = data.categories;
-        this.limit = this.limit + 4;
-        // console.log(this.categories);      
+        const newCategories = data.categories;
+        this.categories = [...this.categories, ...newCategories]; // Agregar nuevas categorías al array existente
+        this.offset += this.limit;
+
+        // Si la respuesta contiene menos elementos que el límite, no hay más categorías
+        if (newCategories.length < this.limit) {
+          this.hasMore = false;
+        }
+      },
+      (error) => {
+        console.error('Error loading categories:', error);
       }
     );
   }
 
-  // getRequestParams(offset: number, limit: number): any {
   getRequestParams(offset: number, limit: number): any {
     let params: any = {};
-
     params[`offset`] = offset;
     params[`limit`] = limit;
-
     return params;
   }
 
   scroll() {
     this.getCategories();
   }
-
-
 }

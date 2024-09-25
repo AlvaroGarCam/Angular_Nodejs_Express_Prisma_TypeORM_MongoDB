@@ -49,8 +49,8 @@ const findAllJob = asyncHandler(async (req, res) => {
         return varQuery != "undefined" && varQuery ? varQuery : otherResult;
     };
 
-    let limit = transUndefined(req.query.limit, 3);
-    let offset = transUndefined(req.query.offset, 0);
+    // let limit = transUndefined(req.query.limit, 3);
+    // let offset = transUndefined(req.query.offset, 0);
     let category = transUndefined(req.query.category, "");
     let name = transUndefined(req.query.name, "");
     let company = transUndefined(req.query.company, "");
@@ -74,10 +74,10 @@ const findAllJob = asyncHandler(async (req, res) => {
     //     query._id = { $in: favoriter.favorites };
     // }
 
-    const jobs = await Job.find(query).limit(Number(limit)).skip(Number(offset));
+    const jobs = await Job.find(query);
     const Job_count = await Job.find(query).countDocuments();
 
-    // return res.json(jobs)
+    return res.json(jobs)
 
     if (!jobs) {
         res.status(404).json({ msg: "Falló" });
@@ -239,33 +239,53 @@ const GetjobsByCategory = asyncHandler(async (req, res) => {
 
 //UPDATE
 const updateJob = asyncHandler(async (req, res) => {
-
-    // const userId = req.userId;
-
-    const Job = req.body;
+    const jobData = req.body;
     const { slug } = req.params;
-    // return res.json(req.params);
-    // const loginUser = await User.findById(userId).exec();
 
-    const target = await Job.findOne({ slug }).exec();
+    try {
+        const target = await Job.findOne({ slug }).exec();
 
-    if (Job.name) {
-        target.name = Job.name;
-    }
-    if (Job.description) {
-        target.description = Job.description;
-    }
-    if (Job.salary) {
-        target.salary = Job.salary;
-    }
-    if (Job.company) {
-        target.company = Job.company;
-    }
+        if (!target) {
+            return res.status(404).json({
+                message: "Job not found"
+            });
+        }
 
-    await target.save();
-    return res.status(200).json({
-        article: await target.toJobResponse()
-    })
+        if (jobData.name) {
+            target.name = jobData.name;
+        }
+        if (jobData.description) {
+            target.description = jobData.description;
+        }
+        if (jobData.salary) {
+            target.salary = jobData.salary;
+        }
+        if (jobData.company) {
+            target.company = jobData.company;
+        }
+        if (jobData.images) {
+            target.images = jobData.images;
+        }
+        if (jobData.img) {
+            target.img = jobData.img;
+        }
+        if (jobData.id_cat) {
+            target.id_cat = jobData.id_cat;
+        }
+        if (jobData.slug) {
+            target.slug = jobData.slug;
+        }
+
+        await target.save();
+        return res.status(200).json({
+            job: target.toJobResponse()
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Error updating job",
+            error: error.message
+        });
+    }
 });
 
 module.exports = {
