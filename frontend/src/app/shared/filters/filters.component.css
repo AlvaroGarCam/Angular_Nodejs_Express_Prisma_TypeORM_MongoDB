@@ -1,0 +1,217 @@
+.container-filters {
+    width: 100%;
+    padding: 10px;
+}
+
+.title_box {
+    width: 100%;
+    text-align: center;
+}
+
+.title_box h3 {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.remove_btn {
+    width: 70%;
+    padding: 10px;
+}
+
+.remove_btn:hover {
+    background: rgb(192, 192, 192);
+}
+
+
+.subheader {
+    max-width: 80%;
+    /* Ajusta el ancho máximo según tus preferencias */
+    margin: 0 auto;
+    /* Centra el contenido en la página */
+    text-align: center;
+    /* Alinea el texto al centro dentro de la clase */
+}
+
+/*
+.container-filters label {
+    padding-top: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.container-filters input, .container-filters select {
+    margin-bottom: 4%;
+    background-image: linear-gradient(#fff,#f7f7f7);
+}
+
+#state {
+    display: block;
+} 
+*/
+
+@media screen and (max-width: 576px) {
+
+    .filters_box {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+
+    .container-filters label {
+        padding-top: 10px;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    .container-filters input,
+    .container-filters select {
+        width: 80%;
+        margin-bottom: 4%;
+        background-image: linear-gradient(#fff, #f7f7f7);
+    }
+
+    .remove_btn {
+        margin-top: 10%;
+    }
+
+    #state {
+        display: block;
+    }
+}
+
+@media screen and (min-width: 577px) {
+
+    .filters_box {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .container-filters label {
+        padding-top: 0px;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    .container-filters input,
+    .container-filters select {
+        width: 80%;
+        margin-bottom: 4%;
+        background-image: linear-gradient(#fff, #f7f7f7);
+    }
+
+    .remove_btn {
+        margin-top: 5%;
+    }
+}
+
+@media screen and (min-width: 993px) {
+
+    .filters_box {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+
+    .container-filters label {
+        padding-top: 10px;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    .container-filters input,
+    .container-filters select {
+        width: 80%;
+        margin-bottom: 4%;
+        background-image: linear-gradient(#fff, #f7f7f7);
+    }
+
+    .remove_btn {
+        margin-top: 10%;
+    }
+
+    #state {
+        display: block;
+    }
+}
+
+
+
+.subheader {
+    padding: 20px 0;
+    border-radius: 5px;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.custom-select {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 10px;
+    transition: border-color 0.3s;
+}
+
+.custom-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+.form-control {
+    border-radius: 5px;
+    padding: 10px;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+.btn-block {
+    border-radius: 5px;
+    padding: 10px;
+    transition: background-color 0.3s;
+}
+
+.btn-block:hover {
+    background-color: #c82333;
+}
+
+
+.form-control {
+    border-radius: 5px;
+    padding: 10px;
+    transition: border-color 0.3s;
+    background-color: #004085;
+    /* Color de fondo del header */
+    color: white;
+    /* Color de la letra */
+    font-family: 'Roboto', sans-serif;
+    /* Fuente redondeada y moderna */
+    font-size: 16px;
+    /* Tamaño de la fuente */
+}
+
+.form-control::placeholder {
+    color: white;
+    /* Color del placeholder */
+    font-family: 'Roboto', sans-serif;
+    /* Fuente redondeada y moderna */
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+    background-color: #004085;
+    /* Asegura que el fondo se mantenga al enfocar */
+    color: white;
+    /* Asegura que la letra se mantenga blanca al enfocar */
+    font-family: 'Roboto', sans-serif;
+    /* Fuente redondeada y moderna */
+}

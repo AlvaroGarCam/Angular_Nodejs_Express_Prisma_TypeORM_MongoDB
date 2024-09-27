@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 //SEARCH
-// import { SearchComponent } from '../shared/search/search.component';
+import { SearchComponent } from '../shared/search/search.component';
 // import { ShowAuthedDirective } from './show-authed.directive';
 // //CATEGORIAS
 import { ListCategoriesComponent } from '../shared/list-categories/list-categories.component';
@@ -18,15 +18,13 @@ import { CarouselItemsComponent } from './carousel-items/carousel-items.componen
 import { CarouselComponent } from './carousel/carousel.component';
 
 import { InfiniteScrollModule } from "ngx-infinite-scroll";
-// import { FiltersComponent } from './filters/filters.component';
+import { FiltersComponent } from './filters/filters.component';
 // import { FavoriteButtonComponent } from './buttons/favorite-button.component';
 // import { FollowButtonComponent } from './buttons/follow-button.component';
 // import { CommentsComponent } from './comments/comments.component';
 // import { ListJobsOnProfileComponent } from './list-jobs-on-profile/list-jobs-on-profile.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 // import { FollowListComponent } from './follow-list/follow-list.component';
-
-
 
 @NgModule({
      imports: [
@@ -45,15 +43,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
           CardJobComponent,
           CarouselItemsComponent,
           CarouselComponent,
-          // FiltersComponent,
-          // SearchComponent,
+          FiltersComponent,
+          SearchComponent,
           // ShowAuthedDirective,
           // FavoriteButtonComponent,
           // FollowButtonComponent,
           // CommentsComponent,
           // ListJobsOnProfileComponent,
           // FollowListComponent
-
      ],
      exports: [
           ListCategoriesComponent,
@@ -64,8 +61,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
           CardCategoryComponent,
           CarouselItemsComponent,
           CarouselComponent,
-          // FiltersComponent,
-          // SearchComponent,
+          FiltersComponent,
+          SearchComponent,
           // ShowAuthedDirective,
           // FavoriteButtonComponent,
           // FollowButtonComponent,

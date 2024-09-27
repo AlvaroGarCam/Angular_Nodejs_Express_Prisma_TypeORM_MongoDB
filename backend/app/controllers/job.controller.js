@@ -49,11 +49,10 @@ const findAllJob = asyncHandler(async (req, res) => {
         return varQuery != "undefined" && varQuery ? varQuery : otherResult;
     };
 
-    // let limit = transUndefined(req.query.limit, 3);
-    // let offset = transUndefined(req.query.offset, 0);
+    let limit = transUndefined(req.query.limit, 3);
+    let offset = transUndefined(req.query.offset, 0);
     let category = transUndefined(req.query.category, "");
     let name = transUndefined(req.query.name, "");
-    let company = transUndefined(req.query.company, "");
     let salary_min = transUndefined(req.query.salary_min, 0);
     let salary_max = transUndefined(req.query.salary_max, Number.MAX_SAFE_INTEGER);
     let nameReg = new RegExp(name);
@@ -74,10 +73,10 @@ const findAllJob = asyncHandler(async (req, res) => {
     //     query._id = { $in: favoriter.favorites };
     // }
 
-    const jobs = await Job.find(query);
-    const Job_count = await Job.find(query).countDocuments();
+    const jobs = await Job.find(query).limit(Number(limit)).skip(Number(offset));
+    const job_count = await Job.find(query).countDocuments();
 
-    return res.json(jobs)
+    // return res.json(jobs)
 
     if (!jobs) {
         res.status(404).json({ msg: "Falló" });
@@ -88,12 +87,11 @@ const findAllJob = asyncHandler(async (req, res) => {
     // return res.json(user)
 
     return res.status(200).json({
-        jobs: await Promise.all(jobs.map(async Job => {
-            return await Job.toJobResponse();
-        })), Job_count: Job_count
+        jobs: await Promise.all(jobs.map(async job => {
+            return await job.toJobResponse();
+        })), job_count: job_count
     });
 });
-
 //findONE
 const findOneJob = async (req, res) => {
     try {

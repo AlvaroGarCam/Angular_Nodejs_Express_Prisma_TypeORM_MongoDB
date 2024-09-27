@@ -21,6 +21,7 @@ export class DetailsComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        window.scrollTo(0, 0);
         this.route.data.subscribe(
             (data: any) => {
                 // console.log('Datos recibidos del resolver:', data); // Log adicional

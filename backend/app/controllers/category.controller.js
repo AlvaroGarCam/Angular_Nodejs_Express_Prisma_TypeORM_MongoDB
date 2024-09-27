@@ -16,22 +16,22 @@ const create = asyncHandler(async (req, res) => {
   res.json(new_category);
 });
 
-// const findCategoriesSelect = asyncHandler(async (req, res) => {
+const findCategoriesSelect = asyncHandler(async (req, res) => {
 
-//   const categories = await Category.find();
+  const categories = await Category.find();
 
-//   if (!categories) {
-//     return res.status(401).json({
-//       message: "Category not found"
-//     })
-//   }
+  if (!categories) {
+    return res.status(401).json({
+      message: "Category not found"
+    })
+  }
 
-//   return res.status(200).json({
-//     categories: await Promise.all(categories.map(async categories => {
-//       return await categories.toCategoryResponse()
-//     }))
-//   });
-// });
+  return res.status(200).json({
+    categories: await Promise.all(categories.map(async categories => {
+      return await categories.toCategoryResponse()
+    }))
+  });
+});
 
 
 // ENCONTRAR TODAS LAS CATEGORIAS
@@ -80,5 +80,5 @@ module.exports = {
   findAll,
   findOne,
   delete_category,
-  // findCategoriesSelect
+  findCategoriesSelect
 }

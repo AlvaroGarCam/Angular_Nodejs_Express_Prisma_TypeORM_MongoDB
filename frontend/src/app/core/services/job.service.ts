@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable, of } from 'rxjs';
 import { Job } from '../models/job.model';
 import { tap } from 'rxjs/operators';
-// import { Filters } from '../models/filters.model';
+import { Filters } from '../models/filters.model';
 
 const URL = 'http://localhost:3000/jobs';
 const URLcat = 'http://localhost:3000/categories';
@@ -23,11 +23,11 @@ export class Jobservice {
     }
 
     // //FILTERS
-    // get_jobs_filter(filters: Filters): Observable<Job[]> {
-    //     let params = {};
-    //     params = filters;
-    //     return this.http.get<Job[]>(URL, { params });
-    // }
+    get_jobs_filter(filters: Filters): Observable<Job[]> {
+        let params = {};
+        params = filters;
+        return this.http.get<Job[]>(URL, { params });
+    }
 
     //GET ONE
     get_job(slug: string): Observable<Job> {

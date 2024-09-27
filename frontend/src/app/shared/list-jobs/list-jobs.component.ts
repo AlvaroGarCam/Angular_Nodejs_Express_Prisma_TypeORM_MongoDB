@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Jobservice } from '../../core/services/job.service';
 import { Job } from '../../core/models/job.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from 'src/app/core/models/category.model';
 import { CategoryService } from 'src/app/core/services/category.service';
-// import { Filters } from 'src/app/core/models/filters.model';
+import { Filters } from 'src/app/core/models/filters.model';
 import { Location } from '@angular/common';
 
 @Component({
@@ -16,15 +16,15 @@ import { Location } from '@angular/common';
 export class ListJobsComponent implements OnInit {
 
   //Declaracions
-  // routeFilters!: string | null;
+  routeFilters!: string | null;
   jobs: Job[] = [];
   slug_Category: string | null = null;
   listCategories: Category[] = [];
-  // filters = new Filters();
+  filters = new Filters();
   offset: number = 0;
   limit: number = 3;
-  // totalPages: Array<number> = [];
-  // currentPage: number = 1;
+  totalPages: Array<number> = [];
+  currentPage: number = 1;
 
 
 
@@ -32,33 +32,32 @@ export class ListJobsComponent implements OnInit {
   constructor(private jobservice: Jobservice,
     private ActivatedRoute: ActivatedRoute,
     private CategoryService: CategoryService,
-    private Location: Location
+    private Location: Location,
+    private router: Router
   ) {
-    // this.slug_Category = this.ActivatedRoute.snapshot.paramMap.get('filters');
+    this.slug_Category = this.ActivatedRoute.snapshot.paramMap.get('filters');
   }
 
   //Lo que inicia
   ngOnInit(): void {
     this.slug_Category = this.ActivatedRoute.snapshot.paramMap.get('slug');
-    // this.routeFilters = this.ActivatedRoute.snapshot.paramMap.get('filters');
+    this.routeFilters = this.ActivatedRoute.snapshot.paramMap.get('filters');
     // console.log(this.ActivatedRoute.snapshot.paramMap.get('filters'));
 
 
 
-    // this.getListForCategory();
+    this.getListForCategory();
 
     if (this.slug_Category !== null) {
       this.get_jobs_by_cat();
-    } else {
-      this.get_all_jobs();
     }
-    // else if (this.routeFilters !== null) {
-    //   this.refreshRouteFilter();
-    //   this.get_list_filtered(this.filters);
-    // } else {
-    //   // console.log(window.location.href);
-    //   this.get_list_filtered(this.filters);
-    // }
+    else if (this.routeFilters !== null) {
+      this.refreshRouteFilter();
+      this.get_list_filtered(this.filters);
+    } else {
+      // console.log(window.location.href);
+      this.get_list_filtered(this.filters);
+    }
   }
 
   //COGER TODOS LOS JOBS
@@ -95,52 +94,60 @@ export class ListJobsComponent implements OnInit {
     }
   }
 
-  // get_list_filtered(filters: Filters) {
-  //   this.filters = filters;
-  //   // console.log(JSON.stringify(this.filters));
-  //   this.jobservice.get_jobs_filter(filters).subscribe(
-  //     (data: any) => {
-  //       this.jobs = data.jobs;
-  //       this.totalPages = Array.from(new Array(Math.ceil(data.job_count / this.limit)), (val, index) => index + 1);
-  //       console.log(this.jobs);
-  //     });
-  // }
-
+  get_list_filtered(filters: Filters) {
+    this.filters = filters;
+    // console.log(JSON.stringify(this.filters));
+    this.jobservice.get_jobs_filter(filters).subscribe(
+      (data: any) => {
+        if (data && data.jobs && data.job_count !== undefined && data.job_count !== null) {
+          this.jobs = data.jobs;
+          const totalPagesCount = Math.ceil(data.job_count / this.limit);
+          this.totalPages = Array.from(new Array(totalPagesCount), (val, index) => index + 1);
+          // console.log(this.jobs);
+        } else {
+          console.error('La respuesta no contiene la propiedad jobs o job_count:', data);
+        }
+      },
+      (error) => {
+        console.error('Error al obtener los trabajos:', error);
+      }
+    );
+  }
   //Agarrar les categories pa els filtros
-  // getListForCategory() {
-  //   this.CategoryService.all_categories_select().subscribe(
-  //     (data: any) => {
-  //       this.listCategories = data.categories;
-  //     }
-  //   );
-  // }
+  getListForCategory() {
+    this.CategoryService.all_categories_select().subscribe(
+      (data: any) => {
+        this.listCategories = data.categories;
+      }
+    );
+  }
 
 
-  // refreshRouteFilter() {
-  //   this.routeFilters = this.ActivatedRoute.snapshot.paramMap.get('filters');
-  //   if (typeof (this.routeFilters) == "string") {
-  //     this.filters = JSON.parse(atob(this.routeFilters));
-  //   } else {
-  //     this.filters = new Filters();
-  //   }
-  // }
+  refreshRouteFilter() {
+    this.routeFilters = this.ActivatedRoute.snapshot.paramMap.get('filters');
+    if (typeof (this.routeFilters) == "string") {
+      this.filters = JSON.parse(atob(this.routeFilters));
+    } else {
+      this.filters = new Filters();
+    }
+  }
 
-  // setPageTo(pageNumber: number) {
+  setPageTo(pageNumber: number) {
 
-  //   this.currentPage = pageNumber;
+    this.currentPage = pageNumber;
 
-  //   if (typeof this.routeFilters === 'string') {
-  //     this.refreshRouteFilter();
-  //   }
+    if (typeof this.routeFilters === 'string') {
+      this.refreshRouteFilter();
+    }
 
-  //   if (this.limit) {
-  //     this.filters.limit = this.limit;
-  //     this.filters.offset = this.limit * (this.currentPage - 1);
-  //   }
+    if (this.limit) {
+      this.filters.limit = this.limit;
+      this.filters.offset = this.limit * (this.currentPage - 1);
+    }
 
-  //   this.Location.replaceState('/shop/' + btoa(JSON.stringify(this.filters)));
-  //   // console.log(this.Location);
-  //   this.get_list_filtered(this.filters);
-  // }
+    this.Location.replaceState('/shop/' + btoa(JSON.stringify(this.filters)));
+    // console.log(this.Location);
+    this.get_list_filtered(this.filters);
+  }
 }
 

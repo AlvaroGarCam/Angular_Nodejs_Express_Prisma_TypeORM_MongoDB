@@ -1,0 +1,72 @@
+.height {
+    height: 100vh;
+}
+
+
+.search {
+    position: relative;
+    box-shadow: #1E262D;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.search input {
+    border-radius: 10px;
+    height: 60px;
+    text-indent: 15px;
+    border: 2px solid #004085;
+    width: 50%;
+
+    /* Hacer que el input ocupe el 100% del ancho de su contenedor */
+
+}
+
+.subheader {
+    max-width: 80%;
+    /* Ajusta el ancho máximo según tus preferencias */
+    margin: 0 auto;
+    /* Centra el contenido en la página */
+    text-align: center;
+    /* Alinea el texto al centro dentro de la clase */
+}
+
+.search input:focus {
+
+    box-shadow: none;
+    border: 2px solid rgb(0, 0, 0);
+
+
+}
+
+.search .fa-search {
+
+    position: absolute;
+    top: 20px;
+    left: 16px;
+
+}
+
+
+
+.subheader {
+    margin-top: 20px;
+}
+
+.search-form .input-group {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.search-form .input-group-text {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.search-form .form-control {
+    border: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
