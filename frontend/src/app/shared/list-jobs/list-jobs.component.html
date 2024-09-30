@@ -7,7 +7,15 @@
         </div>
     </div>
 </div>
-<div class="pagination-container">
+
+<div class="pagination-container" *ngIf="totalJobs > limit">
+    <div class="pagination">
+        <app-pagination [numItems]="totalJobs" [numItemsXPage]="limit"
+            (paginationEvent)="testPagination($event)"></app-pagination>
+    </div>
+</div>
+
+<!-- <div class="pagination-container">
     <nav *ngIf="jobs.length != 0 && totalPages.length != 1">
         <ul class="pagination justify-content-center">
             <li class="page-item" [ngClass]="{'active': pageNumber === currentPage}"
@@ -16,4 +24,4 @@
             </li>
         </ul>
     </nav>
-</div>
+</div> -->

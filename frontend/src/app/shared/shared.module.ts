@@ -5,6 +5,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 //SEARCH
 import { SearchComponent } from '../shared/search/search.component';
+
+//PAGINATION
+import { PaginationComponent } from './pagination/pagination.component';
+
 // import { ShowAuthedDirective } from './show-authed.directive';
 // //CATEGORIAS
 import { ListCategoriesComponent } from '../shared/list-categories/list-categories.component';
@@ -51,6 +55,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
           // CommentsComponent,
           // ListJobsOnProfileComponent,
           // FollowListComponent
+          PaginationComponent
      ],
      exports: [
           ListCategoriesComponent,
@@ -69,6 +74,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
           // CommentsComponent,
           // ListJobsOnProfileComponent,
           // FollowListComponent
+          PaginationComponent
      ],
 })
 

@@ -25,7 +25,9 @@ export class ListJobsComponent implements OnInit {
   limit: number = 3;
   totalPages: Array<number> = [];
   currentPage: number = 1;
-
+  lastParams!: Filters;
+  numItems?: number;
+  totalJobs: number = 0;
 
 
 
@@ -43,8 +45,6 @@ export class ListJobsComponent implements OnInit {
     this.slug_Category = this.ActivatedRoute.snapshot.paramMap.get('slug');
     this.routeFilters = this.ActivatedRoute.snapshot.paramMap.get('filters');
     // console.log(this.ActivatedRoute.snapshot.paramMap.get('filters'));
-
-
 
     this.getListForCategory();
 
@@ -94,18 +94,19 @@ export class ListJobsComponent implements OnInit {
     }
   }
 
-  get_list_filtered(filters: Filters) {
+  get_list_filtered(filters: any) {
     this.filters = filters;
-    // console.log(JSON.stringify(this.filters));
     this.jobservice.get_jobs_filter(filters).subscribe(
       (data: any) => {
+        console.log('API response:', data); // Verifica la respuesta completa de la API
         if (data && data.jobs && data.job_count !== undefined && data.job_count !== null) {
           this.jobs = data.jobs;
+          this.totalJobs = data.job_count; // Actualiza el valor de totalJobs
           const totalPagesCount = Math.ceil(data.job_count / this.limit);
           this.totalPages = Array.from(new Array(totalPagesCount), (val, index) => index + 1);
           // console.log(this.jobs);
         } else {
-          console.error('La respuesta no contiene la propiedad jobs o job_count:', data);
+          console.error('La respuesta no contiene la propiedad jobs o Job_count:', data);
         }
       },
       (error) => {
@@ -113,6 +114,7 @@ export class ListJobsComponent implements OnInit {
       }
     );
   }
+
   //Agarrar les categories pa els filtros
   getListForCategory() {
     this.CategoryService.all_categories_select().subscribe(
@@ -130,6 +132,16 @@ export class ListJobsComponent implements OnInit {
     } else {
       this.filters = new Filters();
     }
+  }
+
+  testPagination(data: any) {
+    let params: any = {};
+    if (this.lastParams) {
+      params = this.lastParams;
+    }
+    params['limit'] = data.limit;
+    params['offset'] = data.offset;
+    this.get_list_filtered(params);
   }
 
   setPageTo(pageNumber: number) {
