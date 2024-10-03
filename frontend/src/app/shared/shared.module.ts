@@ -9,7 +9,7 @@ import { SearchComponent } from '../shared/search/search.component';
 //PAGINATION
 import { PaginationComponent } from './pagination/pagination.component';
 
-// import { ShowAuthedDirective } from './show-authed.directive';
+import { ShowAuthedDirective } from './show-authed.directive';
 // //CATEGORIAS
 import { ListCategoriesComponent } from '../shared/list-categories/list-categories.component';
 import { CardCategoryComponent } from '../shared/card-category/card-category.component';
@@ -49,7 +49,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
           CarouselComponent,
           FiltersComponent,
           SearchComponent,
-          // ShowAuthedDirective,
+          ShowAuthedDirective,
           // FavoriteButtonComponent,
           // FollowButtonComponent,
           // CommentsComponent,
@@ -60,15 +60,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
      exports: [
           ListCategoriesComponent,
           ListJobsComponent,
-          // FormsModule,
-          // ReactiveFormsModule,
+          FormsModule,
+          ReactiveFormsModule,
           CardJobComponent,
           CardCategoryComponent,
           CarouselItemsComponent,
           CarouselComponent,
           FiltersComponent,
           SearchComponent,
-          // ShowAuthedDirective,
+          ShowAuthedDirective,
           // FavoriteButtonComponent,
           // FollowButtonComponent,
           // CommentsComponent,
