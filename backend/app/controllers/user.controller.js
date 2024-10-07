@@ -10,32 +10,32 @@ const argon2 = require('argon2');
 // @required fields {email, username, password}
 // @return User
 const registerUser = asyncHandler(async (req, res) => {
-     const { user } = req.body;
+     const { username, email, password } = req.body;
 
      // Confirm data
-     if (!user || !user.email || !user.username || !user.password) {
+     if (!username || !email || !password) {
           return res.status(400).json({ message: "All fields are required" });
      }
 
      // Verificar si el email ya está en uso
-     const existingEmail = await User.findOne({ email: user.email });
+     const existingEmail = await User.findOne({ email });
      if (existingEmail) {
           return res.status(422).json("The email is already taken");
      }
 
      // Verificar si el username ya está en uso
-     const existingUsername = await User.findOne({ username: user.username });
+     const existingUsername = await User.findOne({ username });
      if (existingUsername) {
           return res.status(422).json("The username is already taken");
      }
 
      // Hash password
-     const hashedPwd = await argon2.hash(user.password);
+     const hashedPwd = await argon2.hash(password);
 
      const userObject = {
-          "username": user.username,
+          "username": username,
           "password": hashedPwd,
-          "email": user.email
+          "email": email
      };
 
      const createdUser = await User.create(userObject);
@@ -52,6 +52,7 @@ const registerUser = asyncHandler(async (req, res) => {
           });
      }
 });
+
 
 // @desc get currently logged-in user
 // @route GET /api/user
