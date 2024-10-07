@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-
 import { AuthComponent } from './auth.component';
 import { NoAuthGuard } from '../core/guards/no-auth-guard.service';
 import { SharedModule } from '../shared';
@@ -21,4 +20,4 @@ import { ReactiveFormsModule } from '@angular/forms';
     NoAuthGuard
   ]
 })
-export class AuthModule {}
+export class AuthModule { }

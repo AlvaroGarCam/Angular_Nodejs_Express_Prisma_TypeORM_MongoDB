@@ -12,3 +12,4 @@ export * from './layout/footer/footer.component';
 // export * from './show-authed.directive';
 // export * from './profile-products/profile-products.component';
 export * from './card-job/card-job.component'
+export * from './list-errors/list-errors.component';

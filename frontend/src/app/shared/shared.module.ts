@@ -3,32 +3,27 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-//SEARCH
-import { SearchComponent } from '../shared/search/search.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
-//PAGINATION
-import { PaginationComponent } from './pagination/pagination.component';
+// CATEGORIES
+import { ListCategoriesComponent } from './list-categories/list-categories.component';
+import { CardCategoryComponent } from './card-category/card-category.component';
 
-import { ShowAuthedDirective } from './show-authed.directive';
-// //CATEGORIAS
-import { ListCategoriesComponent } from '../shared/list-categories/list-categories.component';
-import { CardCategoryComponent } from '../shared/card-category/card-category.component';
+// JOBS
+import { ListJobsComponent } from '../shared/list-jobs/list-jobs.component';
+import { CardJobComponent } from '../shared/card-job/card-job.component';
 
-// //JOBS
-import { ListJobsComponent } from './list-jobs/list-jobs.component';
-import { CardJobComponent } from './card-job/card-job.component';
-//Carousel
+//ERRORS
+import { ListErrorsComponent } from '../shared/list-errors/list-errors.component';
+
+// SHARED
 import { CarouselItemsComponent } from './carousel-items/carousel-items.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselComponent } from './carousel/carousel.component';
-
-import { InfiniteScrollModule } from "ngx-infinite-scroll";
 import { FiltersComponent } from './filters/filters.component';
-// import { FavoriteButtonComponent } from './buttons/favorite-button.component';
-// import { FollowButtonComponent } from './buttons/follow-button.component';
-// import { CommentsComponent } from './comments/comments.component';
-// import { ListJobsOnProfileComponent } from './list-jobs-on-profile/list-jobs-on-profile.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
-// import { FollowListComponent } from './follow-list/follow-list.component';
+import { SearchComponent } from './search/search.component';
+import { PaginationComponent } from './pagination/pagination.component';
+import { ShowAuthedDirective } from './show-authed.directive';
 
 @NgModule({
      imports: [
@@ -42,40 +37,32 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
      ],
      declarations: [
           ListCategoriesComponent,
-          CardCategoryComponent,
           ListJobsComponent,
+          CardCategoryComponent,
           CardJobComponent,
           CarouselItemsComponent,
           CarouselComponent,
           FiltersComponent,
           SearchComponent,
+          PaginationComponent,
           ShowAuthedDirective,
-          // FavoriteButtonComponent,
-          // FollowButtonComponent,
-          // CommentsComponent,
-          // ListJobsOnProfileComponent,
-          // FollowListComponent
-          PaginationComponent
+          ListErrorsComponent,
+
      ],
      exports: [
-          ListCategoriesComponent,
-          ListJobsComponent,
           FormsModule,
           ReactiveFormsModule,
-          CardJobComponent,
+          ListCategoriesComponent,
+          ListJobsComponent,
           CardCategoryComponent,
+          CardJobComponent,
           CarouselItemsComponent,
           CarouselComponent,
           FiltersComponent,
           SearchComponent,
+          PaginationComponent,
           ShowAuthedDirective,
-          // FavoriteButtonComponent,
-          // FollowButtonComponent,
-          // CommentsComponent,
-          // ListJobsOnProfileComponent,
-          // FollowListComponent
-          PaginationComponent
+          ListErrorsComponent,
      ],
 })
-
 export class SharedModule { }
