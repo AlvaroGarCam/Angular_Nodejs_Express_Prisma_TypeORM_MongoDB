@@ -91,7 +91,7 @@ userSchema.methods.toUserResponse = function () {
           email: this.email,
           bio: this.bio,
           image: this.image,
-          access_token: accessToken,
+          token: accessToken,
           refresh_token: refreshToken,
      };
 };

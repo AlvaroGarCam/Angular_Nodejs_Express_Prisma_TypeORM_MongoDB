@@ -51,7 +51,14 @@ export class AuthComponent {
     this.user = this.authForm.value;
     this.userService.attemptAuth(this.authType, this.user).subscribe({
       next: () => {
-        this.router.navigateByUrl('/');
+
+        if (this.authType === 'login') {
+          // Redirigir al home después de un login exitoso
+          this.router.navigateByUrl('/home');
+        } else {
+          // Redirigir al login después de un registro exitoso
+          this.router.navigateByUrl('/login');
+        }
       },
       error: (err: any) => {
         this.errors = err.errors ? err.errors : [err.message || 'An error occurred']; this.isSubmitting = false;
