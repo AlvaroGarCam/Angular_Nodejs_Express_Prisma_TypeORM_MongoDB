@@ -48,7 +48,7 @@ require('../routes/job.routes.js')(app);
 require('../routes/carousel.routes')(app);
 // require('../routes/user.routes')(app);
 app.use(require('../routes/user.routes.js'));
-require('../routes/profile.routes')(app);
+// require('../routes/profile.routes')(app);
 // require('../routes/comment.routes')(app);
 
 

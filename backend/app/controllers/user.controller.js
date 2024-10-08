@@ -1,121 +1,103 @@
 const User = require('../models/user.model');
 const asyncHandler = require('express-async-handler');
 const argon2 = require('argon2');
+const Blacklist = require('../models/blacklist.model');
 
-
-
-// @desc registration for a user
-// @route POST /api/users
-// @access Public
-// @required fields {email, username, password}
-// @return User
+// Registro de un nuevo usuario
 const registerUser = asyncHandler(async (req, res) => {
-     const { username, email, password } = req.body;
+     const { user } = req.body;
 
-     // Confirm data
-     if (!username || !email || !password) {
-          return res.status(400).json({ message: "All fields are required" });
+     // Confirmar datos
+     if (!user || !user.email || !user.username || !user.password) {
+          return res.status(400).json({ message: "Todos los campos son obligatorios" });
      }
 
-     // Verificar si el email ya está en uso
-     const existingEmail = await User.findOne({ email });
-     if (existingEmail) {
-          return res.status(422).json("The email is already taken");
+     const existingUser = await User.find({ $or: [{ email: user.email }, { username: user.username }] });
+     if (existingUser.length > 0) {
+          return res.status(409).json({ message: "Un usuario con este correo electrónico o nombre de usuario ya existe" });
      }
 
-     // Verificar si el username ya está en uso
-     const existingUsername = await User.findOne({ username });
-     if (existingUsername) {
-          return res.status(422).json("The username is already taken");
-     }
-
-     // Hash password
-     const hashedPwd = await argon2.hash(password);
+     // Hashear la contraseña
+     const hashedPwd = await argon2.hash(user.password);
 
      const userObject = {
-          "username": username,
+          "username": user.username,
           "password": hashedPwd,
-          "email": email
+          "email": user.email
      };
 
      const createdUser = await User.create(userObject);
 
-     if (createdUser) { // User object created successfully
+     if (createdUser) {
           res.status(201).json({
-               user: createdUser.toUserResponse()
+               message: "Usuario registrado correctamente"
           });
      } else {
           res.status(422).json({
                errors: {
-                    body: "Unable to register a user"
+                    body: "No se pudo registrar un usuario"
                }
           });
      }
 });
 
-
-// @desc get currently logged-in user
-// @route GET /api/user
-// @access Private
-// @return User
-const getCurrentUser = asyncHandler(async (req, res) => {
-     // After authentication; email and hashed password was stored in req
-     const email = req.userEmail;
-     console.log("Email from token:", email);
-
-     const user = await User.findOne({ email }).exec();
-     console.log("User found:", user);
-
-     if (!user) {
-          return res.status(404).json({ message: "User Not Found" });
-     }
-
-     res.status(200).json({
-          user: user.toUserResponse()
-     });
-});
-
-// @desc login for a user
-// @route POST /api/users/login
-// @access Public
-// @required fields {email, password}
-// @return User
+// Iniciar sesión de un usuario existente
 const userLogin = asyncHandler(async (req, res) => {
      const { user } = req.body;
 
-     // confirm data
+     // Confirmar datos
      if (!user || !user.email || !user.password) {
-          return res.status(400).json({ message: "All fields are required" });
+          return res.status(400).json({ message: "Todos los campos son obligatorios" });
      }
 
      const loginUser = await User.findOne({ email: user.email }).exec();
 
-     // console.log(loginUser);
-
      if (!loginUser) {
-          return res.status(404).json({ message: "User Not Found" });
+          return res.status(404).json({ message: "Usuario no encontrado" });
      }
 
-     // Comparar la contraseña usando argon2
      const match = await argon2.verify(loginUser.password, user.password);
 
-     if (!match) return res.status(401).json({ message: 'Unauthorized: Wrong password' })
+     if (!match) {
+          return res.status(401).json({ message: 'No autorizado: Contraseña incorrecta' });
+     }
 
+     // Si el usuario tiene un refresh token existente, añadirlo a la blacklist si no está ya
+     if (loginUser.refresh_token) {
+          const tokenExists = await Blacklist.findOne({ token: loginUser.refresh_token }).exec();
+          if (!tokenExists) {
+               await Blacklist.create({ token: loginUser.refresh_token, userId: loginUser._id });
+          }
+     }
+
+     // Utilizar toUserResponse para generar los tokens y devolver al cliente
+     const response = loginUser.toUserResponse();
      res.status(200).json({
-          user: loginUser.toUserResponse()
+          user: response
      });
-
 });
 
-// @desc update currently logged-in user
-// Warning: if password or email is updated, client-side must update the token
-// @route PUT /api/user
-// @access Private
-// @return User
+// Obtener el usuario actual
+const getCurrentUser = asyncHandler(async (req, res) => {
+     const email = req.userEmail;
+
+     const user = await User.findOne({ email }).exec();
+
+     if (!user) {
+          return res.status(404).json({ message: "Usuario no encontrado" });
+     }
+
+     res.status(200).json({
+          user: user.toUserDetails()
+     });
+});
+
+
+// Actualizar usuario
 const updateUser = asyncHandler(async (req, res) => {
      const { user } = req.body;
 
-     // Confirm data
+     // Confirmar datos
      if (!user) {
           return res.status(400).json({ message: "Required a User object" });
      }
@@ -124,28 +106,12 @@ const updateUser = asyncHandler(async (req, res) => {
 
      const target = await User.findOne({ email }).exec();
 
-     if (!target) {
-          return res.status(404).json({ message: "User not found" });
-     }
-
-     // Verificar si el email ya está tomado por otro usuario
-     if (user.email && user.email !== target.email) {
-          const existingEmail = await User.findOne({ email: user.email });
-          if (existingEmail) {
-               return res.status(422).json("The email is already taken");
-          }
+     if (user.email) {
           target.email = user.email;
      }
-
-     // Verificar si el username ya está tomado por otro usuario
-     if (user.username && user.username !== target.username) {
-          const existingUsername = await User.findOne({ username: user.username });
-          if (existingUsername) {
-               return res.status(422).json("The username is already taken");
-          }
+     if (user.username) {
           target.username = user.username;
      }
-
      if (user.password) {
           const hashedPwd = await argon2.hash(user.password);
           target.password = hashedPwd;
@@ -156,11 +122,10 @@ const updateUser = asyncHandler(async (req, res) => {
      if (typeof user.bio !== 'undefined') {
           target.bio = user.bio;
      }
-
      await target.save();
 
      return res.status(200).json({
-          user: target.toUserResponse()
+          user: target.toUserDetails()
      });
 });
 
@@ -169,4 +134,4 @@ module.exports = {
      getCurrentUser,
      userLogin,
      updateUser
-}
+};
