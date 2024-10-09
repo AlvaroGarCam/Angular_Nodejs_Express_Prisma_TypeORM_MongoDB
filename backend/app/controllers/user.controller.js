@@ -9,13 +9,21 @@ const registerUser = asyncHandler(async (req, res) => {
 
      // Confirmar datos
      if (!user || !user.email || !user.username || !user.password) {
-          return res.status(400).json({ message: "Todos los campos son obligatorios" });
+          return res.status(400).json({ message: "All fields are required." });
      }
 
-     const existingUser = await User.find({ $or: [{ email: user.email }, { username: user.username }] });
-     if (existingUser.length > 0) {
-          return res.status(409).json({ message: "Un usuario con este correo electrónico o nombre de usuario ya existe" });
+     // Comprobar si el nombre de usuario ya existe
+     const existingUsername = await User.findOne({ username: user.username });
+     if (existingUsername) {
+          return res.status(409).json({ message: "This username already exists." });
      }
+
+     // Comprobar si el correo electrónico ya existe
+     const existingEmail = await User.findOne({ email: user.email });
+     if (existingEmail) {
+          return res.status(409).json({ message: "This email already exists." });
+     }
+
 
      // Hashear la contraseña
      const hashedPwd = await argon2.hash(user.password);
@@ -47,19 +55,19 @@ const userLogin = asyncHandler(async (req, res) => {
 
      // Confirmar datos
      if (!user || !user.email || !user.password) {
-          return res.status(400).json({ message: "Todos los campos son obligatorios" });
+          return res.status(400).json({ message: "All fields are required." });
      }
 
      const loginUser = await User.findOne({ email: user.email }).exec();
 
      if (!loginUser) {
-          return res.status(404).json({ message: "Usuario no encontrado" });
+          return res.status(404).json({ message: "Usser not found." });
      }
 
      const match = await argon2.verify(loginUser.password, user.password);
 
      if (!match) {
-          return res.status(401).json({ message: 'No autorizado: Contraseña incorrecta' });
+          return res.status(401).json({ message: 'Unauthorized: wrong password.' });
      }
 
      // Si el usuario tiene un refresh token existente, añadirlo a la blacklist si no está ya
@@ -91,7 +99,6 @@ const getCurrentUser = asyncHandler(async (req, res) => {
           user: user.toUserDetails()
      });
 });
-
 
 // Actualizar usuario
 const updateUser = asyncHandler(async (req, res) => {

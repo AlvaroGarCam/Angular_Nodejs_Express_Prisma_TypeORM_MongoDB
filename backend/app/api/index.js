@@ -13,7 +13,6 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
-
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -50,10 +49,6 @@ require('../routes/carousel.routes')(app);
 app.use(require('../routes/user.routes.js'));
 // require('../routes/profile.routes')(app);
 // require('../routes/comment.routes')(app);
-
-
-
-
 
 app.listen(process.env.PORT, () => {
    console.log(`Servidor Express en el puerto ${process.env.PORT}`);

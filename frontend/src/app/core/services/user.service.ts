@@ -91,17 +91,11 @@ export class UserService {
     }
 
     // Logout the user
-    logout() {
-        // Hacer una solicitud de logout al backend
-        this.apiService.post('/users/logout', {}).subscribe(
-            () => {
-                // Si el logout es exitoso, purgar la autenticación
+    logout(): Observable<void> {
+        return this.apiService.post('/users/logout', {}).pipe(
+            map(() => {
                 this.purgeAuth();
-            },
-            (err) => {
-                // En caso de error, de todas formas purgar la autenticación
-                this.purgeAuth();
-            }
+            })
         );
     }
 }

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { UserService } from '../core/services/user.service';
 import { User } from '../core/models/user.model';
-
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-settings-page',
@@ -31,8 +31,6 @@ export class SettingsComponent implements OnInit {
             email: '',
             password: ''
         });
-        // Optional: subscribe to changes on the form
-        // this.settingsForm.valueChanges.subscribe(values => this.updateUser(values));
     }
 
     ngOnInit() {
@@ -43,36 +41,51 @@ export class SettingsComponent implements OnInit {
     }
 
     logout() {
-        this.userService.logout();
-        this.router.navigateByUrl('/');
+        this.userService.logout().subscribe({
+            next: () => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Logged out successfully',
+                    text: 'See you soon!'
+                }).then(() => {
+                    this.router.navigateByUrl('/');
+                });
+            },
+            error: (err) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Logout failed',
+                    text: 'Please try again later.'
+                });
+            }
+        });
     }
 
     submitForm() {
         this.isSubmitting = true;
 
         // update the model
-        // console.log(this.settingsForm.value);
-
         this.updateUser(this.settingsForm.value);
-        // console.log(this.user);
 
-        this.userService.update(this.user).subscribe(
-            updatedUser => {
-                console.log(updatedUser);
-                this.router.navigateByUrl('/home');
-
+        this.userService.update(this.user).subscribe({
+            next: (updatedUser) => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Settings successfully updated'
+                }).then(() => {
+                    this.router.navigateByUrl('/home');
+                });
+            },
+            error: (err) => {
+                this.errors = err;
+                this.isSubmitting = false;
+                this.cd.markForCheck();
             }
-
-            // err => {
-            //  this.errors = err;
-            //  this.isSubmitting = false;
-            //  this.cd.markForCheck();
-            // }
-        );
+        });
     }
 
     updateUser(values: Object) {
         Object.assign(this.user, values);
     }
-
 }
