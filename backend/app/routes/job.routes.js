@@ -1,19 +1,17 @@
 module.exports = (app) => {
 
     const jobs = require('../controllers/job.controller.js');
-    // const verifyJWT = require('../middleware/verifyJWT');
-    // const verifyJWTOptional = require('../middleware/verifyJWTOptional.js');
+    const { verifyJWT } = require("../middleware/verifyJWT");
+    const verifyJWTOptional = require('../middleware/verifyJWTOptional.js');
 
     // create a new job
     app.post('/jobs', jobs.createJob);
 
     //GET ALL
-    app.get('/jobs', jobs.findAllJob);
-    // app.get('/jobs', verifyJWTOptional, jobs.findAllJob);
+    app.get('/jobs', verifyJWTOptional, jobs.findAllJob);
 
     //GET ONE
-    app.get('/jobs/:slug', jobs.findOneJob);
-    // app.get('/jobs/:slug', verifyJWTOptional, jobs.findOneJob);
+    app.get('/jobs/:slug', verifyJWTOptional, jobs.findOneJob);
 
     // Delete a Note with noteId
     app.delete('/jobs/:slug', jobs.deleteOneJob);
@@ -23,13 +21,13 @@ module.exports = (app) => {
     // app.get('/categories/:slug', verifyJWTOptional, jobs.GetjobsByCategory);
 
     //get all jobs by category slug
-    app.get('/categories/:slug/jobs', jobs.getJobsByCategorySlug); // Nueva ruta
+    app.get('/categories/:slug/jobs', verifyJWTOptional, jobs.getJobsByCategorySlug);
 
-    //Favorite
-    // app.post('/:slug/favorite', verifyJWT, jobs.favouriteJob);
+    //FAVORITE
+    app.post("/:slug/favorite", verifyJWT, jobs.favoriteJob);
 
-    //Unfavorite
-    // app.delete('/:slug/favorite', verifyJWT, jobs.unfavoriteJob);
+    //UNFAVORITE
+    app.delete("/:slug/favorite", verifyJWT, jobs.unfavoriteJob);
 
     //Update
     app.put('/jobs/:slug', jobs.updateJob);

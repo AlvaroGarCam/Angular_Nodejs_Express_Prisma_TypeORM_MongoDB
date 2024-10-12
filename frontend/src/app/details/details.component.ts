@@ -2,17 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { Job } from '../core/models/job.model';
 import { Jobservice } from '../core/services/job.service';
 import { ActivatedRoute, Router } from '@angular/router';
-// import { CarouselDetails } from '../core/models/carousel.model';
+
 @Component({
     selector: 'app-details',
     templateUrl: './details.component.html',
     styleUrls: ['./details.component.css']
 })
+
 export class DetailsComponent implements OnInit {
 
-    job: Job | null = null;
-    slug: string | null = null;
-    // @Input() page!: CarouselDetails[];
+    job!: Job;
+    slug!: string | null;
 
     constructor(
         private route: ActivatedRoute,
@@ -21,10 +21,9 @@ export class DetailsComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        window.scrollTo(0, 0);
         this.route.data.subscribe(
             (data: any) => {
-                // console.log('Datos recibidos del resolver:', data); // Log adicional
+                console.log('Datos recibidos del resolver:', data); // Log adicional
                 if (data && data.job) {
                     this.slug = data.job.slug;
                     this.job = data.job;
@@ -40,21 +39,23 @@ export class DetailsComponent implements OnInit {
         );
     }
 
-    get_job() {
+    getJob() {
         if (typeof this.slug === 'string') {
-            this.jobService.get_job(this.slug).subscribe(
-                (data: any) => {
-                    this.job = data;
-                    console.log('Trabajo recibido:', this.job);
-                },
-                (error) => {
-                    console.error('Error al obtener el trabajo:', error);
-                    this.router.navigate(['/']);
-                }
-            );
+            this.jobService.get_job(this.slug).subscribe((data: any) => {
+                this.job = data.jobs;
+            });
         } else {
-            console.log('Fallo al encontrar el job');
             this.router.navigate(['/']);
+        }
+    }
+
+    onToggleFavorite(favorited: boolean) {
+        this.job.favorited = favorited;
+
+        if (favorited) {
+            this.job.favoritesCount++;
+        } else {
+            this.job.favoritesCount--;
         }
     }
 }

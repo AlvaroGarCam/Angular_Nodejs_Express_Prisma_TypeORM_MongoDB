@@ -40,6 +40,14 @@ const userSchema = new mongoose.Schema(
                type: String,
                default: "",
           },
+          favoriteJob: [{
+               type: mongoose.Schema.Types.ObjectId,
+               ref: "Job"
+          }],
+          following: [{
+               type: mongoose.Schema.Types.ObjectId,
+               ref: 'User'
+          }]
      },
      {
           timestamps: true,
@@ -112,8 +120,8 @@ userSchema.methods.toProfileJSON = function (user) {
           username: this.username,
           bio: this.bio,
           image: this.image,
-          following: user ? user.isFollowing(this._id) : false
-     }
+          following: user ? user.isFollowing(this._id) : false,
+     };
 };
 
 userSchema.methods.isFollowing = function (id) {
@@ -140,41 +148,28 @@ userSchema.methods.unfollow = function (id) {
      return this.save();
 };
 
-userSchema.methods.isFavourite = function (id) {
+userSchema.methods.isFavorite = function (id) {
      const idStr = id.toString();
-     for (const article of this.favouriteArticles) {
-          if (article.toString() === idStr) {
+     for (const job of this.favoriteJob) {
+          if (job.toString() === idStr) {
                return true;
           }
      }
      return false;
 }
 
+
 userSchema.methods.favorite = function (id) {
-     if (this.favouriteArticles.indexOf(id) === -1) {
-          this.favouriteArticles.push(id);
+     if (this.favoriteJob.indexOf(id) === -1) {
+          this.favoriteJob.push(id);
      }
-
-     // const article = await Article.findById(id).exec();
-     //
-     // article.favouritesCount += 1;
-     //
-     // await article.save();
-
      return this.save();
 }
 
 userSchema.methods.unfavorite = function (id) {
-     if (this.favouriteArticles.indexOf(id) !== -1) {
-          this.favouriteArticles.remove(id);
+     if (this.favoriteJob.indexOf(id) !== -1) {
+          this.favoriteJob.remove(id);
      }
-
-     // const article = await Article.findById(id).exec();
-     //
-     // article.favouritesCount -= 1;
-     //
-     // await article.save();
-
      return this.save();
 };
 

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
 const uniqueValidator = require('mongoose-unique-validator');
-// const User = require('../models/user.model.js');
+const User = require('../models/user.model.js');
 const { log } = require('console');
 
 const JobSchema = mongoose.Schema({
@@ -35,18 +35,14 @@ const JobSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    // author: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'User'
-    // },
-    // favouritesCount: {
-    //     type: Number,
-    //     default: 0
-    // },
-    // comments: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Comment'
-    // }]
+    favoritesCount: {
+        type: Number,
+        default: 0
+    },
+    comments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment'
+    }]
 });
 
 JobSchema.plugin(uniqueValidator, { msg: "already taken" });
@@ -64,60 +60,38 @@ JobSchema.methods.slugify = async function () {
     this.slug = slugify(this.name) + '-' + (Math.random() * Math.pow(36, 10) | 0).toString(36);
 };
 
+// #region JOB RESPONSE
 JobSchema.methods.toJobResponse = async function (user) {
 
-    // const authorObj = await User.findById(this.author).exec();
+    // return user;
+    return {
+        slug: this.slug,
+        name: this.name,
+        salary: this.salary,
+        description: this.description,
+        company: this.company,
+        id_cat: this.id_cat,
+        img: this.img,
+        images: this.images,
+        favorited: user ? user.isFavorite(this._id) : false,
+        favoritesCount: this.favoritesCount || 0,
+    };
+};
 
-    if (user !== null || user !== undefined) {
-        // return "hay usuario"
-        return {
-            slug: this.slug,
-            name: this.name,
-            salary: this.salary,
-            description: this.description,
-            company: this.company,
-            id_cat: this.id_cat,
-            img: this.img,
-            images: this.images,
-            // favorited: user.isFavorite(this._id),
-            // favoritesCount: this.favouritesCount,
-            // author: authorObj.toProfileJSON(user)
-        }
-    } else {
-        // return "no hay usuario"
-        return {
-            slug: this.slug,
-            name: this.name,
-            salary: this.salary,
-            description: this.description,
-            company: this.company,
-            id_cat: this.id_cat,
-            img: this.img,
-            images: this.images,
-            // favorited: false,
-            // favoritesCount: this.favouritesCount,
-            // author: authorObj.toProfileUnloggedJSON()
-        }
-    }
-}
-
+// #region CAROUSEL RESPONSE
 JobSchema.methods.toJobCarouselResponse = async function () {
     return {
         images: this.images
-    }
-}
+    };
+};
 
-// JobSchema.methods.updateFavoriteCount = async function () {
-
-//     const favoriteCount = await User.count({
-//         favouriteJob: { $in: [this._id] }
-//     });
-
-//     // return favoriteCount; 
-//     this.favouritesCount = favoriteCount;
-
-//     return this.save();
-// }
+// #region FAVORITES
+JobSchema.methods.updateFavoriteCount = async function () {
+    const job = this;
+    const count = await User.countDocuments({ favoriteJob: job._id }).exec();
+    job.favoritesCount = count;
+    return job.save();
+};
 
 
 // JobSchema.methods.addComment = function (commentId) {
@@ -134,4 +108,5 @@ JobSchema.methods.toJobCarouselResponse = async function () {
 //     return this.save();
 // };
 
+// #region EXPORTS
 module.exports = mongoose.model('Job', JobSchema);

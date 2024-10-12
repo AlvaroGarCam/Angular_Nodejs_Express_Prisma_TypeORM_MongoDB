@@ -1,10 +1,10 @@
 const Job = require('../models/job.model.js');
-const Category = require('../models/category.model.js');
-const mongoose = require('mongoose');
-const asyncHandler = require('express-async-handler');
-// const User = require('../models/user.model.js');
+const Category = require("../models/category.model.js");
+const mongoose = require("mongoose");
+const asyncHandler = require("express-async-handler");
+const User = require("../models/user.model.js");
 
-//create
+// #region CREATE JOB
 const createJob = asyncHandler(async (req, res) => {
 
     const JobData = {
@@ -15,7 +15,6 @@ const createJob = asyncHandler(async (req, res) => {
         images: req.body.images,
         img: req.body.img || null,
         id_cat: req.body.id_cat || null,
-        // author: req.author || null
     };
 
     const id_cat = req.body.id_cat;
@@ -37,11 +36,11 @@ const createJob = asyncHandler(async (req, res) => {
     await category.addJob(nuevoTrabajo._id);
 
     return res.status(200).json({
-        Job: await nuevoTrabajo.toJobResponse()
-    })
+        Job: await nuevoTrabajo.toJobResponse(),
+    });
 });
 
-//findALL
+// #region LIST ALL JOBS
 const findAllJob = asyncHandler(async (req, res) => {
 
     let query = {};
@@ -56,7 +55,7 @@ const findAllJob = asyncHandler(async (req, res) => {
     let salary_min = transUndefined(req.query.salary_min, 0);
     let salary_max = transUndefined(req.query.salary_max, Number.MAX_SAFE_INTEGER);
     let nameReg = new RegExp(name);
-    // let favorited = transUndefined(req.query.favorited, null);
+    let favorited = transUndefined(req.query.favorited, null);
     // let id_user = req.auth ? req.auth.id : null;
 
     query = {
@@ -68,13 +67,17 @@ const findAllJob = asyncHandler(async (req, res) => {
         query.id_cat = category;
     }
 
-    // if (favorited) {
-    //     const favoriter = await User.findOne({ username: favorited });
-    //     query._id = { $in: favoriter.favorites };
-    // }
-
+    // Obtener el usuario si está logueado
+    let user = null;
+    if (req.loggedin) {
+        try {
+            user = await User.findById(req.userId);
+        } catch (error) {
+            console.error("Error al obtener el usuario:", error);
+        }
+    }
     const jobs = await Job.find(query).limit(Number(limit)).skip(Number(offset));
-    const job_count = await Job.find(query).countDocuments();
+    const Job_count = await Job.find(query).countDocuments();
 
     // return res.json(jobs)
 
@@ -88,11 +91,70 @@ const findAllJob = asyncHandler(async (req, res) => {
 
     return res.status(200).json({
         jobs: await Promise.all(jobs.map(async job => {
-            return await job.toJobResponse();
-        })), job_count: job_count
+            return await job.toJobResponse(user);
+        })), Job_count: Job_count
     });
 });
-//findONE
+
+// #region DETAILS
+// const findOneJob = async (req, res) => {
+//     try {
+//         console.log('User ID:', req.userId); // Verificar el userId
+//         console.log('Logged in:', req.loggedin); // Verificar si el usuario está logueado
+
+//         const job = await Job.findOne({ slug: req.params.slug }).exec();
+//         console.log('Job encontrado en el backend:', job); // Verificar el job
+//         if (!job) {
+//             return res.status(404).json({ message: 'Job not found' });
+//         }
+
+//         if (req.loggedin) {
+//             const user = await User.findById(req.userId).exec();
+//             console.log('User encontrado en el backend:', user); // Verificar el user
+//             if (!user) {
+//                 return res.status(404).json({ message: 'User not found' });
+//             }
+
+//             const favorited = user.favoriteJob.includes(job._id);
+
+//             const jobResponse = {
+//                 slug: job.slug,
+//                 name: job.name,
+//                 salary: job.salary,
+//                 description: job.description,
+//                 company: job.company,
+//                 id_cat: job.id_cat,
+//                 img: job.img,
+//                 images: job.images,
+//                 favorited: favorited,
+//                 favoritesCount: job.favoritesCount || 0,
+//             };
+
+//             console.log('Job response:', jobResponse); // Verificar el jobResponse
+//             return res.status(200).json({ job: jobResponse });
+//         } else {
+//             const jobResponse = {
+//                 slug: job.slug,
+//                 name: job.name,
+//                 salary: job.salary,
+//                 description: job.description,
+//                 company: job.company,
+//                 id_cat: job.id_cat,
+//                 img: job.img,
+//                 images: job.images,
+//                 favorited: false,
+//                 favoritesCount: job.favoritesCount || 0,
+//             };
+
+//             console.log('Job response (no user):', jobResponse); // Verificar el jobResponse
+//             return res.status(200).json({ job: jobResponse });
+//         }
+//     } catch (error) {
+//         console.error('Error al obtener el job en el backend:', error);
+//         res.status(500).json({ message: 'Error retrieving job', error });
+//     }
+// };
+
 const findOneJob = async (req, res) => {
     try {
         const job = await Job.findOne({ slug: req.params.slug }).exec();
@@ -107,7 +169,7 @@ const findOneJob = async (req, res) => {
     }
 };
 
-//DELETE ONE
+// #region DELETE ONE
 const deleteOneJob = asyncHandler(async (req, res) => {
     // return res.json("holaaa");
     const slug = req.params;
@@ -135,18 +197,30 @@ const deleteOneJob = asyncHandler(async (req, res) => {
     });
 });
 
-// Obtener todos los trabajos por slug de categoría
+// #region GET JOBS BY CATEGORY SLUG
 const getJobsByCategorySlug = asyncHandler(async (req, res) => {
-    const { slug } = req.params;
-    const category = await Category.findOne({ slug }).populate('jobs').exec();
+
+    // res.json("holaaa")
+    let offset = 0;
+    let limit = 3;
+    const slug = req.params;
+    let Job_count = "";
+
+    const category = await Category.findOne(slug).exec();
 
     if (!category) {
-        return res.status(404).json({ message: 'Categoría no encontrada' });
+        res.status(400).json({ message: "Categoria no encontrada" });
     }
 
-    return res.status(200).json({ jobs: category.jobs });
+    const user = await User.findById(req.userId);
+    return await res.status(200).json({
+        jobs: await Promise.all(category.jobs.map(async jobId => {
+            const jobObj = await Job.findById(jobId).skip(offset).limit(limit).exec();
+            return await jobObj.toJobResponse(user);
+        })),
+        Job_count: Job_count
+    })
 });
-
 
 const GetjobsByCategory = asyncHandler(async (req, res) => {
     const slug = req.params.slug; // Asegúrate de obtener el slug correctamente
@@ -169,73 +243,7 @@ const GetjobsByCategory = asyncHandler(async (req, res) => {
     });
 });
 
-
-// const favouriteJob = asyncHandler(async (req, res) => {
-
-//     const id = req.userId;
-
-//     const { slug } = req.params;
-
-//     const loginUser = await User.findById(id).exec();
-
-//     if (!loginUser) {
-//         return res.status(401).json({
-//             message: "User Not Found"
-//         });
-//     }
-
-//     const Job = await Job.findOne({ slug }).exec();
-
-//     if (!Job) {
-//         return res.status(401).json({
-//             message: "Job Not Found"
-//         });
-//     }
-
-//     await loginUser.favorite(Job._id);
-
-//     // return res.json(loginUser);
-//     const updatedJob = await Job.updateFavoriteCount();
-
-//     // return res.json(updatedJob);
-
-//     return res.status(200).json({
-//         Job: await updatedJob.toJobResponse(loginUser)
-//     });
-// });
-
-// const unfavoriteJob = asyncHandler(async (req, res) => {
-
-//     const id = req.userId;
-
-//     const { slug } = req.params;
-
-//     const loginUser = await User.findById(id).exec();
-
-//     if (!loginUser) {
-//         return res.status(401).json({
-//             message: "User Not Found"
-//         });
-//     }
-
-//     const Job = await Job.findOne({ slug }).exec();
-
-//     if (!Job) {
-//         return res.status(401).json({
-//             message: "Job Not Found"
-//         });
-//     }
-
-//     await loginUser.unfavorite(Job._id);
-
-//     await Job.updateFavoriteCount();
-
-//     return res.status(200).json({
-//         Job: await Job.toJobResponse(loginUser)
-//     });
-// });
-
-//UPDATE
+// #region UPDATE JOB
 const updateJob = asyncHandler(async (req, res) => {
     const jobData = req.body;
     const { slug } = req.params;
@@ -286,6 +294,52 @@ const updateJob = asyncHandler(async (req, res) => {
     }
 });
 
+// #region FAVORITE
+const favoriteJob = asyncHandler(async (req, res) => {
+    const id = req.userId;
+    const { slug } = req.params;
+    const loginUser = await User.findById(id).exec();
+    if (!loginUser) {
+        return res.status(401).json({
+            message: "Usuario no encontrado",
+        });
+    }
+    const job = await Job.findOne({ slug }).exec();
+    if (!job) {
+        return res.status(401).json({
+            message: "Trabajo no encontrado",
+        });
+    }
+    await loginUser.favorite(job._id);
+    const updatedJob = await job.updateFavoriteCount();
+    return res.status(200).json({
+        job: await updatedJob.toJobResponse(loginUser),
+    });
+});
+
+// #region UNFAVORITE
+const unfavoriteJob = asyncHandler(async (req, res) => {
+    const id = req.userId;
+    const { slug } = req.params;
+    const loginUser = await User.findById(id).exec();
+    if (!loginUser) {
+        return res.status(401).json({
+            message: "Usuario no encontrado",
+        });
+    }
+    const job = await Job.findOne({ slug }).exec();
+    if (!job) {
+        return res.status(401).json({
+            message: "Trabajo no encontrado",
+        });
+    }
+    await loginUser.unfavorite(job._id);
+    await job.updateFavoriteCount();
+    return res.status(200).json({
+        job: await job.toJobResponse(loginUser),
+    });
+});
+
 module.exports = {
     createJob,
     findAllJob,
@@ -293,7 +347,7 @@ module.exports = {
     deleteOneJob,
     GetjobsByCategory,
     getJobsByCategorySlug,
-    // favouriteJob,
-    // unfavoriteJob,
+    favoriteJob,
+    unfavoriteJob,
     updateJob
 }

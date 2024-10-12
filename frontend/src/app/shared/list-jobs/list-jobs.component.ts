@@ -99,10 +99,10 @@ export class ListJobsComponent implements OnInit {
     this.jobservice.get_jobs_filter(filters).subscribe(
       (data: any) => {
         console.log('API response:', data); // Verifica la respuesta completa de la API
-        if (data && data.jobs && data.job_count !== undefined && data.job_count !== null) {
+        if (data && data.jobs && data.Job_count !== undefined && data.Job_count !== null) {
           this.jobs = data.jobs;
-          this.totalJobs = data.job_count; // Actualiza el valor de totalJobs
-          const totalPagesCount = Math.ceil(data.job_count / this.limit);
+          this.totalJobs = data.Job_count; // Actualiza el valor de totalJobs
+          const totalPagesCount = Math.ceil(data.Job_count / this.limit);
           this.totalPages = Array.from(new Array(totalPagesCount), (val, index) => index + 1);
           // console.log(this.jobs);
         } else {
