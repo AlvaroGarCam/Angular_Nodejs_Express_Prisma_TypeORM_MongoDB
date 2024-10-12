@@ -120,7 +120,7 @@ userSchema.methods.toProfileJSON = function (user) {
           username: this.username,
           bio: this.bio,
           image: this.image,
-          following: user ? user.isFollowing(this._id) : false,
+          // following: user ? user.isFollowing(this._id) : false,
      };
 };
 
@@ -134,19 +134,19 @@ userSchema.methods.isFollowing = function (id) {
      return false;
 };
 
-userSchema.methods.follow = function (id) {
-     if (this.followingUsers.indexOf(id) === -1) {
-          this.followingUsers.push(id);
-     }
-     return this.save();
-};
+// userSchema.methods.follow = function (id) {
+//      if (this.followingUsers.indexOf(id) === -1) {
+//           this.followingUsers.push(id);
+//      }
+//      return this.save();
+// };
 
-userSchema.methods.unfollow = function (id) {
-     if (this.followingUsers.indexOf(id) !== -1) {
-          this.followingUsers.remove(id);
-     }
-     return this.save();
-};
+// userSchema.methods.unfollow = function (id) {
+//      if (this.followingUsers.indexOf(id) !== -1) {
+//           this.followingUsers.remove(id);
+//      }
+//      return this.save();
+// };
 
 userSchema.methods.isFavorite = function (id) {
      const idStr = id.toString();
@@ -172,5 +172,6 @@ userSchema.methods.unfavorite = function (id) {
      }
      return this.save();
 };
+
 
 module.exports = mongoose.model('User', userSchema);

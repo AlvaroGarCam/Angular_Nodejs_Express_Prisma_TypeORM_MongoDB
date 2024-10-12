@@ -16,9 +16,4 @@ module.exports = (app) => {
         // Retrieve all Notes
         app.get('/categories_select_filter', categories.findCategoriesSelect);
 
-        // Update a Note with noteId
-        // app.put('/productos/:id', products.update);
-
-        // Delete todos los mf products
-        // app.delete('/productos_all', products.deleteAll);
 }

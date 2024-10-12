@@ -39,6 +39,10 @@ const JobSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Comment'
@@ -94,19 +98,16 @@ JobSchema.methods.updateFavoriteCount = async function () {
 };
 
 
-// JobSchema.methods.addComment = function (commentId) {
-//     if (this.comments.indexOf(commentId) === -1) {
-//         this.comments.push(commentId);
-//     }
-//     return this.save();
-// };
+// #region COMMENTS
+JobSchema.methods.addComment = function (commentId) {
+    this.comments.push(commentId);
+    return this.save();
+};
 
-// JobSchema.methods.removeComment = function (commentId) {
-//     if (this.comments.indexOf(commentId) !== -1) {
-//         this.comments.remove(commentId);
-//     }
-//     return this.save();
-// };
+JobSchema.methods.removeComment = function (commentId) {
+    this.comments.pull(commentId);
+    return this.save();
+};
 
 // #region EXPORTS
 module.exports = mongoose.model('Job', JobSchema);
