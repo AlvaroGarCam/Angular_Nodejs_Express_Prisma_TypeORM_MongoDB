@@ -24,9 +24,9 @@ export class DetailsComponent implements OnInit {
         this.route.data.subscribe(
             (data: any) => {
                 console.log('Datos recibidos del resolver:', data); // Log adicional
-                if (data && data.job) {
-                    this.slug = data.job.slug;
-                    this.job = data.job;
+                if (data && data.job && data.job.jobs) {
+                    this.slug = data.job.jobs.slug;
+                    this.job = data.job.jobs;
                 } else {
                     console.log('No se encontraron datos del trabajo');
                     this.router.navigate(['/']);

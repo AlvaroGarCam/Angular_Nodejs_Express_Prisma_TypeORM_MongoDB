@@ -96,78 +96,35 @@ const findAllJob = asyncHandler(async (req, res) => {
     });
 });
 
-// #region DETAILS
+// #region LISTAR UNO
+const findOneJob = asyncHandler(async (req, res) => {
+    const jobs = await Job.findOne(req.params);
+
+    const user = await User.findById(req.userId);
+
+    if (!jobs) {
+        return res.status(401).json({
+            message: "Trabajo no encontrado",
+        });
+    }
+    return res.status(200).json({
+        jobs: await jobs.toJobResponse(user),
+    });
+});
+
 // const findOneJob = async (req, res) => {
 //     try {
-//         console.log('User ID:', req.userId); // Verificar el userId
-//         console.log('Logged in:', req.loggedin); // Verificar si el usuario está logueado
-
 //         const job = await Job.findOne({ slug: req.params.slug }).exec();
-//         console.log('Job encontrado en el backend:', job); // Verificar el job
+//         console.log('Job encontrado en el backend:', job); // Verifica el job aquí
 //         if (!job) {
 //             return res.status(404).json({ message: 'Job not found' });
 //         }
-
-//         if (req.loggedin) {
-//             const user = await User.findById(req.userId).exec();
-//             console.log('User encontrado en el backend:', user); // Verificar el user
-//             if (!user) {
-//                 return res.status(404).json({ message: 'User not found' });
-//             }
-
-//             const favorited = user.favoriteJob.includes(job._id);
-
-//             const jobResponse = {
-//                 slug: job.slug,
-//                 name: job.name,
-//                 salary: job.salary,
-//                 description: job.description,
-//                 company: job.company,
-//                 id_cat: job.id_cat,
-//                 img: job.img,
-//                 images: job.images,
-//                 favorited: favorited,
-//                 favoritesCount: job.favoritesCount || 0,
-//             };
-
-//             console.log('Job response:', jobResponse); // Verificar el jobResponse
-//             return res.status(200).json({ job: jobResponse });
-//         } else {
-//             const jobResponse = {
-//                 slug: job.slug,
-//                 name: job.name,
-//                 salary: job.salary,
-//                 description: job.description,
-//                 company: job.company,
-//                 id_cat: job.id_cat,
-//                 img: job.img,
-//                 images: job.images,
-//                 favorited: false,
-//                 favoritesCount: job.favoritesCount || 0,
-//             };
-
-//             console.log('Job response (no user):', jobResponse); // Verificar el jobResponse
-//             return res.status(200).json({ job: jobResponse });
-//         }
+//         res.status(200).json(job);
 //     } catch (error) {
 //         console.error('Error al obtener el job en el backend:', error);
 //         res.status(500).json({ message: 'Error retrieving job', error });
 //     }
 // };
-
-const findOneJob = async (req, res) => {
-    try {
-        const job = await Job.findOne({ slug: req.params.slug }).exec();
-        console.log('Job encontrado en el backend:', job); // Verifica el job aquí
-        if (!job) {
-            return res.status(404).json({ message: 'Job not found' });
-        }
-        res.status(200).json(job);
-    } catch (error) {
-        console.error('Error al obtener el job en el backend:', error);
-        res.status(500).json({ message: 'Error retrieving job', error });
-    }
-};
 
 // #region DELETE ONE
 const deleteOneJob = asyncHandler(async (req, res) => {

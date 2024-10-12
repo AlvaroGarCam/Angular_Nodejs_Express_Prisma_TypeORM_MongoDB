@@ -11,7 +11,7 @@ module.exports = (app) => {
     app.get('/jobs', verifyJWTOptional, jobs.findAllJob);
 
     //GET ONE
-    app.get('/jobs/:slug', verifyJWTOptional, jobs.findOneJob);
+    app.get("/jobs/:slug", verifyJWTOptional, jobs.findOneJob);
 
     // Delete a Note with noteId
     app.delete('/jobs/:slug', jobs.deleteOneJob);

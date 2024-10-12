@@ -29,9 +29,10 @@ export class Jobservice {
     }
 
     //GET ONE
-    get_job(slug: string): Observable<Job> {
+    get_job(slug: String): Observable<Job> {
         return this.http.get<Job>(`${URL}/${slug}`);
     }
+
 
     //CREATE
     create_job(job: Job): Observable<Job[]> {
