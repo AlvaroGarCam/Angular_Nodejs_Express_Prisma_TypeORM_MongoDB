@@ -12,7 +12,7 @@
             <h4 class="card-title">{{jobs.name}}</h4>
             <div class="favorite-btn-container">
                 <app-favorite-button [jobs]="jobs" (toggle)="onToggleFavorite($event)">
-                    {{ jobs.favorited ? 'Unfavorite' : 'Favorite' }}
+                    {{ jobs.favorited ? 'Dislike' : 'Like' }}
                     <span class="counter"> ( {{ jobs.favoritesCount }} )</span>
                 </app-favorite-button>
             </div>
