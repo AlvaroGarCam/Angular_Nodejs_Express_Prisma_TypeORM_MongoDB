@@ -20,14 +20,15 @@
                 </app-favorite-button>
             </div>
             <app-carousel></app-carousel>
-            <!-- <div id="comments_list"> -->
-            <!-- <h2 align="center">Comments</h2> -->
-            <!-- <app-list-comment [slug]="slug ?? ''" (editComment)="onEditComment($event)">
-                </app-list-comment> -->
-            <!-- <app-form-comment *ngIf="selectedComment" [slug]="slug ?? ''" [comment]="selectedComment"
+            <div id="comments_list">
+                <h3 align="center">Comments Section</h3>
+                <hr class="my-4">
+                <app-list-comment [slug]="slug ?? ''" (editComment)="onEditComment($event)">
+                </app-list-comment>
+                <app-form-comment *ngIf="selectedComment" [slug]="slug ?? ''" [comment]="selectedComment"
                     (submitComment)="onSubmitComment()">
-                </app-form-comment> -->
-            <!-- </div> -->
+                </app-form-comment>
+            </div>
         </div>
     </div>
 </div>

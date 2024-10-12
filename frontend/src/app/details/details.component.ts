@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Job } from '../core/models/job.model';
 import { Jobservice } from '../core/services/job.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Comment } from '../core/models/comment.model';
 
 @Component({
     selector: 'app-details',
@@ -13,6 +14,7 @@ export class DetailsComponent implements OnInit {
 
     job!: Job;
     slug!: string | null;
+    selectedComment!: Comment | null;
 
     constructor(
         private route: ActivatedRoute,
@@ -57,5 +59,13 @@ export class DetailsComponent implements OnInit {
         } else {
             this.job.favoritesCount--;
         }
+    }
+
+    onEditComment(comment: Comment) {
+        this.selectedComment = comment;
+    }
+
+    onSubmitComment() {
+        this.selectedComment = null;
     }
 }
