@@ -20,8 +20,8 @@ app-carousel-items {
 
 /* Asegúrate de que las imágenes dentro del carrusel ocupen todo el ancho del contenedor */
 .img_carousel {
-     width: 100%;
-     height: auto;
+     height: 100%;
+     width: auto;
      border-radius: 10px;
      /* Suaviza las esquinas de las imágenes */
      object-fit: cover;

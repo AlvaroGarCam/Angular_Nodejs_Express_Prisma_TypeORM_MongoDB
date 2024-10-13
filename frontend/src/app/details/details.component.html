@@ -21,8 +21,8 @@
             </div>
             <app-carousel></app-carousel>
             <div id="comments_list">
-                <h3 align="center">Comments Section</h3>
-                <hr class="my-4">
+                <h3 align="center"><strong>Comments Section</strong></h3>
+                <hr class="comment-separator">
                 <app-list-comment [slug]="slug ?? ''" (editComment)="onEditComment($event)">
                 </app-list-comment>
                 <app-form-comment *ngIf="selectedComment" [slug]="slug ?? ''" [comment]="selectedComment"

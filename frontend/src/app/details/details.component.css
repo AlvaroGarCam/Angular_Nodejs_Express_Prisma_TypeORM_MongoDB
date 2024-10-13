@@ -180,3 +180,12 @@ hr.my-4 {
 #comments_list .comment button:hover {
     background-color: #c82333;
 }
+
+.comment-separator {
+    border: 0;
+    height: 4px;
+    background: #333;
+    /* Color del separador */
+    margin: 20px 0;
+    /* Espaciado alrededor del separador */
+}

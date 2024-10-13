@@ -35,11 +35,13 @@ export class FormCommentComponent implements OnInit {
                     // Lógica para actualizar el comentario
                     this.commentsService.update(this.slug, this.comment.id, { body: commentBody }).subscribe(() => {
                          this.submitComment.emit();
+                         this.commentForm.reset();
                     });
                } else {
                     // Lógica para agregar un nuevo comentario
                     this.commentsService.add(this.slug, { body: commentBody }).subscribe(() => {
                          this.submitComment.emit();
+                         this.commentForm.reset();
                     });
                }
           }

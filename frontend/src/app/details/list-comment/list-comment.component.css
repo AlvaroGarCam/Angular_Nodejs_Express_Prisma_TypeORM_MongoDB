@@ -62,3 +62,36 @@ button:disabled {
      display: flex;
      justify-content: center;
 }
+
+.comment-content {
+     margin-bottom: 20px;
+}
+
+.comment-footer {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     width: 100%;
+}
+
+.comment-footer p {
+     margin: 0;
+}
+
+.add-your-comment {
+     margin-bottom: 20px;
+     font-weight: bold;
+     font-size: 1.3em;
+     text-align: center;
+     display: flex;
+     justify-content: center;
+}
+
+.comment-separator {
+     border: 0;
+     height: 4px;
+     background: #333;
+     /* Color del separador */
+     margin: 20px 0;
+     /* Espaciado alrededor del separador */
+}

@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema(
           },
           image: {
                type: String,
-               default: "https://static.productionready.io/images/smiley-cyrus.jpg",
+               default: "",
           },
           refresh_token: {
                type: String,
@@ -53,6 +53,13 @@ const userSchema = new mongoose.Schema(
           timestamps: true,
      }
 );
+
+userSchema.pre('save', function (next) {
+     if (!this.image) {
+          this.image = `https://i.pravatar.cc/150?u=${this.username}`;
+     }
+     next();
+});
 
 userSchema.plugin(uniqueValidator);
 

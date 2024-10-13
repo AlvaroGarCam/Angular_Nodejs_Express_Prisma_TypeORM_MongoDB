@@ -6,19 +6,26 @@
           <h3>{{ comment.author.username }}:</h3>
      </div>
      <hr>
-     <p>
-          <strong>{{ comment.body }}</strong>
-     </p>
-     <p>Fecha: {{ comment.createdAt | date: 'medium' }}</p>
-     <div class="delete-button-container">
-          <button class="btn btn-danger mt-3" *ngIf="canModify(comment)" (click)="deleteClicked(comment)">Delete your
-               comment</button>
+     <div class="comment-content">
+          <p>
+               <strong>{{ comment.body }}</strong>
+          </p>
+          <div class="comment-footer">
+               <p>Fecha: {{ comment.createdAt | date: 'medium' }}</p>
+               <button class="btn btn-danger mt-3" *ngIf="canModify(comment)"
+                    (click)="deleteClicked(comment)">Delete</button>
+
+          </div>
      </div>
+     <hr class="comment-separator">
 </div>
-<div *ngIf="isAddingComment">
+<!-- <div *ngIf="isAddingComment">
      <app-form-comment [slug]="slug" (submitComment)="onCommentSubmitted()"></app-form-comment>
 </div>
 
-<div *ngIf="!hasWrittenComment()" class="add-comment-container">
+<div *ngIf="!hasWrittenComment() && !isAddingComment" class="add-comment-container">
      <button class="btn btn-info mt-3" (click)="showCommentForm()">Post your comment</button>
-</div>
+</div> -->
+<br>
+<div class="add-your-comment">Add your comments here:</div>
+<app-form-comment [slug]="slug" (submitComment)="onCommentSubmitted()"></app-form-comment>
