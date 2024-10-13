@@ -1,0 +1,149 @@
+.main {
+     background-color: #f8f9fa;
+}
+
+.user-card {
+     max-width: 600px;
+     margin: 0 auto;
+     border: 1px solid #ddd;
+     border-radius: 10px;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+     background-color: #f8f9fa;
+}
+
+.user-image {
+     width: 250px;
+     height: 250px;
+     object-fit: cover;
+     border: 3px solid white;
+}
+
+.card-title {
+     font-size: 1.75rem;
+     font-weight: bold;
+     color: #343a40;
+}
+
+.card-text {
+     font-size: 1rem;
+     color: #555;
+}
+
+.favorite-jobs {
+     margin-top: 1rem;
+}
+
+.job-cards {
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: center;
+}
+
+.job-card {
+     background-color: #fff;
+     border: 1px solid #ddd;
+     border-radius: 5px;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+     margin: 0.5rem;
+     padding: 1rem;
+     width: 150px;
+     text-align: center;
+}
+
+.job-card h6 {
+     font-size: 1rem;
+     font-weight: bold;
+     color: #007bff;
+}
+
+.job-card p {
+     font-size: 0.875rem;
+     color: #555;
+}
+
+.btn-primary {
+     background-color: #007bff;
+     border-color: #007bff;
+}
+
+.btn-danger {
+     background-color: #dc3545;
+     border-color: #dc3545;
+}
+
+.mt-3 {
+     margin-top: 1rem;
+}
+
+.mt-5 {
+     margin-top: 3rem;
+}
+
+.mb-5 {
+     margin-bottom: 3rem;
+}
+
+.p-3 {
+     padding: 1rem;
+}
+
+.py-5 {
+     padding-top: 3rem;
+     padding-bottom: 3rem;
+}
+
+.text-center {
+     text-align: center;
+}
+
+.text-right {
+     text-align: right;
+}
+
+.rounded {
+     border-radius: 0.25rem;
+}
+
+.bg-white {
+     background-color: #fff;
+}
+
+.border-right {
+     border-right: 1px solid #ddd;
+}
+
+.labels {
+     font-weight: bold;
+     color: #333;
+}
+
+.profile-button {
+     width: 100%;
+}
+
+.profile-header {
+     background-color: #f8f9fa;
+     padding: 20px;
+     border-radius: 10px;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+     text-align: center;
+}
+
+.profile-header .user-image {
+     width: 200px;
+     height: 200px;
+     object-fit: cover;
+     border: 3px solid #007bff;
+}
+
+.profile-header .card-title {
+     font-size: 2rem;
+     color: #343a40;
+     margin-top: 10px;
+}
+
+.profile-header .card-text {
+     font-size: 1.3rem;
+     color: #6c757d;
+     margin-top: 5px;
+}

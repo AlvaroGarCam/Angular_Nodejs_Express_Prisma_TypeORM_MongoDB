@@ -98,4 +98,15 @@ export class UserService {
             })
         );
     }
+
+    // Get user profile
+    getUserProfile(): Observable<User> {
+        return this.apiService.get('/user/profile').pipe(
+            map((data: any) => {
+                // Update the currentUser observable with the profile data
+                this.currentUserSubject.next(data.user);
+                return data.user;
+            })
+        );
+    }
 }

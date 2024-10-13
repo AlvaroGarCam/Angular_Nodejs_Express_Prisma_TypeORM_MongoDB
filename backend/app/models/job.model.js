@@ -88,6 +88,7 @@ JobSchema.methods.toJobProfileResponse = async function (user) {
         name: this.name,
         company: this.company,
         img: this.img,
+        slug: this.slug,
     };
 };
 

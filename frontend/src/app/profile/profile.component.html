@@ -1,10 +1,51 @@
-<div class="container rounded bg-white mt-5 mb-5">
+<div *ngIf="!changeSettings" class="main">
+    <div class="card user-card">
+        <div class="card-body text-center">
+            <div class="profile-header">
+                <img [src]="user.image" class="rounded-circle user-image" alt="User Image">
+                <h5 class="card-title mt-3">{{ user.username }}</h5>
+                <p class="card-text"><strong>About me:</strong> {{ user.bio }}</p>
+                <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
+            </div>
+            <br>
+            <div class="favorite-jobs">
+                <p class="card-text"><strong>Favorite Jobs:</strong></p>
+                <div *ngIf="user.favoriteJobs.length > 0; else noJobs" class="job-cards">
+                    <div *ngFor="let job of user.favoriteJobs" class="job-card">
+                        <a [routerLink]="['/details/', job.slug]" class="job-link">
+                            <img [src]="job.img" alt="{{ job.name }}" *ngIf="job.img" width="100px" height="100px">
+                            <h6>{{ job.name }}</h6>
+                            <p>{{ job.company }}</p>
+                        </a>
+                    </div>
+                </div>
+                <ng-template #noJobs>
+                    <h4>You do not have any favorite jobs yet.</h4>
+                </ng-template>
+                <!-- <app-card-job *ngFor="let job of user.favoriteJobs" [jobs]="job"></app-card-job> -->
+            </div>
+            <br>
+            <div class="following">
+                <p class="card-text"><strong>Following:</strong></p>
+                <div *ngIf="user.following.length > 0; else noFollowing" class="user-cards">
+                    <div *ngFor="let following of user.following" class="user-card">
+                        <h6>{{ user.following }}</h6>
+                    </div>
+                </div>
+            </div>
+            <ng-template #noFollowing>
+                <h4>You have not followed any company yet.</h4>
+            </ng-template>
+            <button class="btn btn-primary mt-3" (click)="toggleSettings()">Change Settings</button>
+            &nbsp;&nbsp;<button class="btn btn-danger mt-3" (click)="logout()">Log out</button>
+        </div>
+    </div>
+</div>
+<div class="container rounded bg-white mt-5 mb-5" *ngIf="changeSettings">
     <div class="row justify-content-center">
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                 <img class="mt-5" width="350px" src="../../assets/logo/settings_img.webp">
-                <!-- <span class="font-weight-bold">{{ currentUser.username }}</span> -->
-                <!-- <span class="text-black-50">{{ currentUser.email }}</span> -->
                 <span> </span>
             </div>
         </div>
@@ -13,7 +54,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h1 class="text-right">Profile Settings</h1>
                 </div>
-                <form [formGroup]="settingsForm" (ngSubmit)="submitForm()">
+                <form [formGroup]="profileForm" (ngSubmit)="submitForm()">
                     <fieldset [disabled]="isSubmitting">
                         <div class="row mt-2">
                             <div class="col-md-12">
@@ -51,8 +92,10 @@
                             </div>
                         </div>
                         <div class="mt-5 text-center">
-                            <button class="btn btn-primary profile-button" type="submit">Update Settings</button>
-                            &nbsp;&nbsp;<button class="btn btn-danger" (click)="logout()">LOGOUT</button>
+                            <button class="btn btn-primary" type="submit" [disabled]="!isFormDirty">Submit
+                                Changes</button>
+                            &nbsp;&nbsp;<button class="btn btn-secondary" (click)="goBack()">Back</button>
+                            &nbsp;&nbsp;<button class="btn btn-danger" (click)="logout()">Log out</button>
                         </div>
                     </fieldset>
                 </form>

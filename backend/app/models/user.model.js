@@ -143,6 +143,7 @@ userSchema.methods.toProfileUser = async function () {
           bio: this.bio,
           image: this.image,
           favoriteJobs: await Promise.all(favoriteJobs.map(async job => await job.toJobProfileResponse(this))),
+          following: this.following,
      };
 };
 
