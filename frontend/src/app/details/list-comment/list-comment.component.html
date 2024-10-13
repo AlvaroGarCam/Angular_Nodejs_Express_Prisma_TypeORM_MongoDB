@@ -1,9 +1,9 @@
 <div *ngFor="let comment of comments">
      <br><br>
      <div class="comment-header">
-          <img src="{{ comment.author.image }}" class="rounded-circle" width="50" height="50"
+          <img src="{{ comment.author.image }}" class="rounded-circle" width="80" height="80"
                alt="{{ comment.author.username }}">
-          <h3>{{ comment.author.username }}:</h3>
+          <h3>{{ comment.author.username }}</h3>
      </div>
      <hr>
      <div class="comment-content">
@@ -14,7 +14,6 @@
                <p>Fecha: {{ comment.createdAt | date: 'medium' }}</p>
                <button class="btn btn-danger mt-3" *ngIf="canModify(comment)"
                     (click)="deleteClicked(comment)">Delete</button>
-
           </div>
      </div>
      <hr class="comment-separator">
@@ -27,5 +26,11 @@
      <button class="btn btn-info mt-3" (click)="showCommentForm()">Post your comment</button>
 </div> -->
 <br>
-<div class="add-your-comment">Add your comments here:</div>
-<app-form-comment [slug]="slug" (submitComment)="onCommentSubmitted()"></app-form-comment>
+
+<div *ngIf="isAuthenticated">
+     <div class="add-your-comment">Add your comments here:</div>
+     <app-form-comment [slug]="slug" (submitComment)="onCommentSubmitted()"></app-form-comment>
+</div>
+<div *ngIf="!isAuthenticated" class="alert alert-info mt-3">
+     <h4 align="center">Please log in to post a comment</h4>
+</div>

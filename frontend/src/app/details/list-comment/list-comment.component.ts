@@ -19,7 +19,9 @@ export class ListCommentComponent implements OnInit, OnDestroy {
 
      subscription!: Subscription;
      currentUser!: User;
+     authSubscription!: Subscription;
      isAddingComment: boolean = false;
+     isAuthenticated: boolean = false;
 
      constructor(
           private userService: UserService,
@@ -35,10 +37,18 @@ export class ListCommentComponent implements OnInit, OnDestroy {
                     this.cd.markForCheck();
                }
           );
+          this.authSubscription = this.userService.isAuthenticated.subscribe(
+               (isAuthenticated: boolean) => {
+                    this.isAuthenticated = isAuthenticated;
+                    this.cd.markForCheck();
+               }
+          );
      }
 
      ngOnDestroy() {
-          this.subscription.unsubscribe();
+          if (this.subscription) {
+               this.subscription.unsubscribe();
+          }
      }
 
      loadComments() {
