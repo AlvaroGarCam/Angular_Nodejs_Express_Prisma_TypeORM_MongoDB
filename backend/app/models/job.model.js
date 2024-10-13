@@ -82,6 +82,15 @@ JobSchema.methods.toJobResponse = async function (user) {
     };
 };
 
+
+JobSchema.methods.toJobProfileResponse = async function (user) {
+    return {
+        name: this.name,
+        company: this.company,
+        img: this.img,
+    };
+};
+
 // #region CAROUSEL RESPONSE
 JobSchema.methods.toJobCarouselResponse = async function () {
     return {
@@ -100,7 +109,7 @@ JobSchema.methods.updateFavoriteCount = async function () {
 
 // #region COMMENTS
 JobSchema.methods.addComment = function (commentId) {
-    this.comments.unshift(commentId);
+    this.comments.push(commentId);
     return this.save();
 };
 

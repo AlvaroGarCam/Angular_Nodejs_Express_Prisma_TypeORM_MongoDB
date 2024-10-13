@@ -113,23 +113,39 @@ userSchema.methods.toUserResponse = function () {
 
 //get Current User
 userSchema.methods.toUserDetails = function () {
+     // const Job = require("./job.model");
+     // const favoriteJobs = await Job.find({ _id: { $in: this.favoriteJob } }).exec();
+
      return {
           username: this.username,
           email: this.email,
           bio: this.bio,
           image: this.image,
+          favoriteJob: this.favoriteJob,
+          following: this.following,
+          // favoriteJobs: favoriteJobs.map(job => ({
+          //      name: job.name,
+          //      company: job.company,
+          //      img: job.img,
+          // })),
+          // following: this.following,
      };
 };
 
+// #region PROFILE
+userSchema.methods.toProfileUser = async function () {
+     const Job = require("./job.model"); // Lazy load del modelo Job
+     const favoriteJobs = await Job.find({ _id: { $in: this.favoriteJob } }).exec();
 
-userSchema.methods.toProfileJSON = function (user) {
      return {
           username: this.username,
+          email: this.email,
           bio: this.bio,
           image: this.image,
-          // following: user ? user.isFollowing(this._id) : false,
+          favoriteJobs: await Promise.all(favoriteJobs.map(async job => await job.toJobProfileResponse(this))),
      };
 };
+
 
 userSchema.methods.isFollowing = function (id) {
      const idStr = id.toString();
@@ -165,7 +181,6 @@ userSchema.methods.isFavorite = function (id) {
      return false;
 }
 
-
 userSchema.methods.favorite = function (id) {
      if (this.favoriteJob.indexOf(id) === -1) {
           this.favoriteJob.push(id);
@@ -179,6 +194,5 @@ userSchema.methods.unfavorite = function (id) {
      }
      return this.save();
 };
-
 
 module.exports = mongoose.model('User', userSchema);
