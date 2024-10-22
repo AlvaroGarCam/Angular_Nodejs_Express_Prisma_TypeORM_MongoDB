@@ -85,10 +85,16 @@ JobSchema.methods.toJobResponse = async function (user) {
 
 JobSchema.methods.toJobProfileResponse = async function (user) {
     return {
-        name: this.name,
-        company: this.company,
-        img: this.img,
         slug: this.slug,
+        name: this.name,
+        salary: this.salary,
+        description: this.description,
+        company: this.company,
+        id_cat: this.id_cat,
+        img: this.img,
+        images: this.images,
+        favorited: user ? user.isFavorite(this._id) : false,
+        favoritesCount: this.favoritesCount || 0,
     };
 };
 
