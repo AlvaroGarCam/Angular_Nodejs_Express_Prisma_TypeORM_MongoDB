@@ -47,8 +47,21 @@ const userSchema = new mongoose.Schema(
           following: [{
                type: mongoose.Schema.Types.ObjectId,
                ref: 'User'
+          }],
+          inscriptions: [{
+               jobId: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'Job'
+               },
+               status: {
+                    type: String,
+                    enum: ["pending", "accepted", "rejected"],
+                    default: "pending"
+               }
           }]
-     },
+     }, {
+     collection: 'Users'
+},
      {
           timestamps: true,
      }

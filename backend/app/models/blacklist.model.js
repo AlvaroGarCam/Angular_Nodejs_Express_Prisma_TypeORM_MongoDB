@@ -15,6 +15,9 @@ const blacklistSchema = new mongoose.Schema(
           },
      },
      {
+          collection: 'Blacklist'
+     },
+     {
           timestamps: true, // Añadir campos createdAt y updatedAt automáticamente
      }
 );

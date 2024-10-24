@@ -39,14 +39,31 @@ const JobSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    author: {
+    recruiter: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        ref: "Recruiter"
     },
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Comment'
+    }],
+    isActive: {
+        type: Boolean,
+        default: false
+    },
+    applications: [{
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        status: {
+            type: String,
+            enum: ["pending", "accepted", "rejected"],
+            default: "pending"
+        }
     }]
+}, {
+    collection: 'Jobs'
 });
 
 JobSchema.plugin(uniqueValidator, { msg: "already taken" });
