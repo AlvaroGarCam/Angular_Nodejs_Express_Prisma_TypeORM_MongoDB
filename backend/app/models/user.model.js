@@ -45,10 +45,10 @@ const userSchema = new mongoose.Schema(
                ref: "Job"
           }],
           following: [{
-               type: mongoose.Schema.Types.ObjectId,
-               ref: 'User'
+               type: String,
+               default: "",
           }],
-          inscriptions: [{
+          inscription: [{
                jobId: {
                     type: mongoose.Schema.Types.ObjectId,
                     ref: 'Job'
