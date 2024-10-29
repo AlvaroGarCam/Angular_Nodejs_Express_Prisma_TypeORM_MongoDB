@@ -2,10 +2,12 @@
     <div class="container page">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <h1 class="text-center">{{ title }}</h1>
-                <p class="text-center">
-                    <a [routerLink]="['/login']" *ngIf="authType === 'register'">¿Ya tienes una cuenta?</a>
-                    <a [routerLink]="['/register']" *ngIf="authType === 'login'">¿Necesitas una cuenta?</a>
+                <h1 class="text-center display-4">{{ title }}</h1>
+                <p class="text-center lead">
+                    <a [routerLink]="['/login']" *ngIf="authType === 'register'" class="btn btn-link">¿Ya tienes una
+                        cuenta?</a>
+                    <a [routerLink]="['/register']" *ngIf="authType === 'login'" class="btn btn-link">¿Necesitas una
+                        cuenta?</a>
                 </p>
                 <fieldset class="form-group hidden-toggles">
                     <input type="radio" id="cliente" name="userType" value="cliente" class="hidden-toggles__input"
@@ -22,7 +24,7 @@
                 </fieldset>
                 <br />
                 <app-list-errors [errors]="errors"></app-list-errors>
-                <form [formGroup]="authForm" (ngSubmit)="submitForm()">
+                <form [formGroup]="authForm" (ngSubmit)="submitForm()" class="needs-validation" novalidate>
                     <fieldset [disabled]="isSubmitting">
                         <fieldset class="form-group" *ngIf="authType === 'register'">
                             <input formControlName="username" placeholder="Nombre de usuario"
