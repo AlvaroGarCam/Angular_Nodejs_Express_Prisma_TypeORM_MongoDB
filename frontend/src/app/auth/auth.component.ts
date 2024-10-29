@@ -1,10 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Errors } from '../core/models/errors.model';
-import { User } from '../core/models/user.model';
 import { UserService } from '../core/services/user.service';
 import Swal from 'sweetalert2';
+import { CompanyService } from '../core/services/company.service';
+import { RecruiterService } from '../core/services/recruiter.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -18,11 +19,14 @@ export class AuthComponent implements OnInit {
   isSubmitting = false;
   authForm: FormGroup;
   user!: any;
+  selectedUserType: string = 'cliente';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
+    private companyService: CompanyService,
+    private recruiterService: RecruiterService,
     private fb: FormBuilder,
     private cd: ChangeDetectorRef
   ) {
@@ -47,8 +51,26 @@ export class AuthComponent implements OnInit {
   submitForm() {
     this.isSubmitting = true;
     this.errors = [];
-    this.user = this.authForm.value;
-    this.userService.attemptAuth(this.authType, this.user).subscribe({
+
+    const credentials = this.authForm.value;
+    let authObservable: Observable<any>;
+    switch (this.selectedUserType) {
+      case 'cliente':
+        authObservable = this.userService.attemptAuth(this.authType, credentials);
+        break;
+      case 'company':
+        authObservable = this.companyService.attemptAuth(this.authType, credentials);
+        break;
+      case 'recruiter':
+        authObservable = this.recruiterService.attemptAuth(this.authType, credentials);
+        break;
+      default:
+        this.errors.push('Debe seleccionar un tipo de usuario.');
+        this.isSubmitting = false;
+        return;
+    }
+
+    authObservable.subscribe({
       next: () => {
         Swal.fire({
           icon: 'success',
