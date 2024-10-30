@@ -7,35 +7,37 @@ import authMiddleware from '../middleware/auth.middleware';
 
 const router = Router();
 const userController = new UserController();
-const recruiterAssignController = new RecruiterAssignController();  // Instanciamos la clase
+const recruiterAssignController = new RecruiterAssignController();
 
-// Ruta para el registro de usuarios
-router.post('/register', async (req: Request, res: Response) => {
-    await userController.register(req, res);  // Llamamos al controlador
+// Ruta para el login de recruiters
+router.post('/recruiter/login', async (req: Request, res: Response) => {
+    await userController.login(req, res);
 });
 
-// Ruta para el login de usuarios
-router.post('/login', async (req: Request, res: Response) => {
-    await userController.login(req, res);  // Llamamos al controlador
+// Ruta para el registro de recruiters
+router.post('/recruiter/register', async (req: Request, res: Response) => {
+    await userController.register(req, res);
 });
 
 // Ruta protegida con middleware de roles
-router.get('/dashboard', roleMiddleware('recruiter'), (req, res) => {
-    
+router.get('/recruiter/dashboard', roleMiddleware('recruiter'), (req, res) => {
+
 });
 
 // Ruta para asignar un recruiter a un job
-router.post('/assign', async (req: Request, res: Response) => {
+router.post('/recruiter/assign', async (req: Request, res: Response) => {
     recruiterAssignController.assignRecruiter(req, res)
 });
 
-router.post('/application/status', async (req: Request, res: Response, next: NextFunction ) => {
+// Ruta para actualizar el estado de una aplicación de job
+router.post('/recruiter/application/status', async (req: Request, res: Response, next: NextFunction) => {
     updateApplicationStatus(req, res, next)
 });
 
+// Ruta para obtener el recruiter actual
 router.get(
-    "/get",
-    authMiddleware,  // Middleware de autenticación
+    "/recruiter",
+    authMiddleware,
     async (req: Request, res: Response, next: NextFunction) => {
         try {
             await userController.getCurrentRecruiter(req, res, next);
