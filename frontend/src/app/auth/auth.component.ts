@@ -76,10 +76,10 @@ export class AuthComponent implements OnInit {
 
     authObservable.subscribe({
       next: (response) => {
-        console.log(response);
+        console.log('Auth response:', response);
         const token = response?.user?.token || response?.token;
         const decodedToken: any = jwtDecode(token);
-
+        console.log('Decoded token:', decodedToken);
         if (decodedToken && decodedToken.typeuser) {
           this.userTypeService.setUserType(decodedToken.typeuser);
         }
@@ -97,7 +97,13 @@ export class AuthComponent implements OnInit {
         });
       },
       error: (err: any) => {
-        this.errors = err.errors ? Object.values(err.errors) : [err.message || 'An error occurred'];
+        console.error('Auth error:', err);
+        // Asegúrate de que el mensaje de error se maneja correctamente
+        if (err.error && err.error.message) {
+          this.errors = [err.error.message];
+        } else {
+          this.errors = err.errors ? Object.values(err.errors) : [err.message || 'An error occurred'];
+        }
         this.isSubmitting = false;
         this.cd.detectChanges();
       },

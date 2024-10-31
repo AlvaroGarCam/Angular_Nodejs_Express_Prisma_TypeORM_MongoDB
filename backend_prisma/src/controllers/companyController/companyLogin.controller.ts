@@ -9,7 +9,7 @@ export default async function companyLogin(
     next: NextFunction
 ) {
     const { email, password } = req.body;
-
+    console.log('Request body:', req.body);
     try {
         // Buscar la empresa por email
         const company = await prisma.companies.findUnique({
@@ -17,9 +17,10 @@ export default async function companyLogin(
                 email: email,
             },
         });
-
+        console.log('Company found:', company);
         // Verificar si la empresa existe
         if (!company) {
+            console.log('Company not found');
             return res.status(404).json({ message: 'Company not found' });
         }
 
