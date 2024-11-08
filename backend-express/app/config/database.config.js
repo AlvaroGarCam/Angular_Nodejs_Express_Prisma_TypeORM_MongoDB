@@ -1,4 +1,4 @@
 require('dotenv').config;
 module.exports = {
-    url: process.env.MONGO_URI
+    url: 'mongodb://mongo:27017/InfoJobs'
 }

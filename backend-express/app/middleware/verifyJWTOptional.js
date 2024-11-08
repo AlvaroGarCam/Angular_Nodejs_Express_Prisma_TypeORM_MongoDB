@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
 
 const verifyJWTOptional = (req, res, next) => {
-    const authHeader = req.headers.authorization || req.headers.Authorization;
+    const authHeader = req.headers.authorization || req.headers.Authorization
 
-    if (!authHeader || !authHeader.startsWith('Token ') || !authHeader.split(' ')[1].length) {
+    if (!authHeader || !authHeader?.startsWith('Token ') || !authHeader.split(' ')[1].length) {
         req.loggedin = false;
         return next();
     }
@@ -15,7 +15,6 @@ const verifyJWTOptional = (req, res, next) => {
         process.env.ACCESS_TOKEN_SECRET,
         (err, decoded) => {
             if (err) {
-                console.error('Error al verificar el token:', err);
                 return res.status(403).json({ message: 'Forbidden' });
             }
             req.loggedin = true;
@@ -24,7 +23,7 @@ const verifyJWTOptional = (req, res, next) => {
             req.userHashedPwd = decoded.user.password;
             next();
         }
-    );
+    )
 };
 
 module.exports = verifyJWTOptional;

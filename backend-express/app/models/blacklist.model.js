@@ -6,11 +6,11 @@ const blacklistSchema = new mongoose.Schema(
           token: {
                type: String,
                required: true,
-               unique: true, // Evitar tokens duplicados en la blacklist
+               unique: true, 
           },
           userId: {
                type: mongoose.Schema.Types.ObjectId,
-               ref: 'User', // Referencia al modelo de usuario
+               ref: 'User', 
                required: true,
           },
      },
@@ -18,7 +18,7 @@ const blacklistSchema = new mongoose.Schema(
           collection: 'Blacklist'
      },
      {
-          timestamps: true, // Añadir campos createdAt y updatedAt automáticamente
+          timestamps: true, 
      }
 );
 
