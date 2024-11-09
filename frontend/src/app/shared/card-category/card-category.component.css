@@ -1,122 +1,30 @@
-.card-img-tiles {
-    position: relative;
-    display: block;
-    border-bottom: 1px solid #e9ecef;
+.fixed-card {
+  width: 730px; 
+  height: 600px; 
 }
 
-.card-img-tiles .inner {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 200px;
-    /* Ajusta la altura según sea necesario */
-    overflow: hidden;
+.fixed-img {
+  height: 300px; 
+  object-fit: cover; 
 }
 
-.card-img-tiles .main-img img {
-    max-width: 100%;
-    height: 100%;
-    object-fit: cover;
-    /* Asegura que la imagen se reescale correctamente */
-    transition: transform 0.3s ease;
-}
-
-.card-img-tiles:hover .main-img img {
-    transform: scale(1.1);
-}
-
-.custom-card {
-    border-radius: 10px;
-    overflow: hidden;
-    border: 2px solid #004085;
-    width: 100%;
-    height: 100%;
-    /* Asegura que todas las tarjetas tengan la misma altura */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.card-body {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    flex-grow: 1;
+.fixed-body {
+  height: 200px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .card-title {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: #004085;
-    font-family: 'Arial', sans-serif;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-    letter-spacing: 0.5px;
-    font-weight: bold;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
-.btn-outline-primary {
-    border-radius: 50px;
-    padding: 0.5rem 1.5rem;
-    margin-top: auto;
-    font-family: 'Arial', sans-serif;
-    /* Cambia la fuente a Arial */
-    font-size: 1rem;
-    /* Ajusta el tamaño de la fuente */
-    text-transform: uppercase;
-    /* Convierte el texto a mayúsculas */
-    letter-spacing: 1px;
-    /* Añade espacio entre las letras */
-    transition: background-color 0.3s ease, color 0.3s ease;
-    /* Añade una transición suave */
+.text-primary {
+  color: #007bff;
+  text-decoration: none;
 }
 
-.btn-outline-primary:hover {
-    background-color: #004085;
-    /* Cambia el color de fondo al pasar el ratón */
-    color: white;
-    /* Cambia el color del texto al pasar el ratón */
-}
-
-
-
-.custom-card {
-    width: 300px;
-    /* Establece un ancho fijo para las tarjetas */
-    height: 400px;
-    /* Establece un alto fijo para las tarjetas */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.card-img-tiles {
-    flex: 1;
-}
-
-.card-img-tiles .inner {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-}
-
-.card-img-tiles .main-img {
-    width: 100%;
-    height: 200px;
-    /* Establece un alto fijo para la imagen principal */
-    overflow: hidden;
-}
-
-.card-img-tiles .main-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    /* Asegúrate de que la imagen se ajuste correctamente */
-}
-
-.card-body {
-    flex: 0 0 auto;
-    padding: 1rem;
-    text-align: center;
+.text-primary:hover {
+  text-decoration: underline;
 }

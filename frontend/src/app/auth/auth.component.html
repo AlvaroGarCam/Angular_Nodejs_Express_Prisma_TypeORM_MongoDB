@@ -1,49 +1,58 @@
 <div class="auth-page">
-    <div class="container page">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <h1 class="text-center display-4">{{ title }}</h1>
-                <p class="text-center lead">
-                    <a [routerLink]="['/login']" *ngIf="authType === 'register'" class="btn btn-link">¿Ya tienes una
-                        cuenta?</a>
-                    <a [routerLink]="['/register']" *ngIf="authType === 'login'" class="btn btn-link">¿Necesitas una
-                        cuenta?</a>
-                </p>
-                <fieldset class="form-group hidden-toggles">
-                    <input type="radio" id="cliente" name="userType" value="cliente" class="hidden-toggles__input"
-                        [(ngModel)]="selectedUserType" required />
-                    <label for="cliente" class="hidden-toggles__label">Cliente</label>
+  <div class="container page">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <h1 class="text-center">{{ title }}</h1>
+        <p class="text-center">
+          <a [routerLink]="['/login']" *ngIf="authType === 'register'">¿Ya tienes una cuenta?</a>
+          <a [routerLink]="['/register']" *ngIf="authType === 'login'">¿Necesitas una cuenta?</a>
+        </p>
+        <fieldset class="form-group hidden-toggles">
+          <input type="radio" id="cliente" name="userType" value="cliente" class="hidden-toggles__input"
+            [(ngModel)]="selectedUserType" required />
+          <label for="cliente" class="hidden-toggles__label">Cliente</label>
 
-                    <input type="radio" id="company" name="userType" value="company" class="hidden-toggles__input"
-                        [(ngModel)]="selectedUserType" required />
-                    <label for="company" class="hidden-toggles__label">Empresa</label>
+          <input type="radio" id="company" name="userType" value="company" class="hidden-toggles__input"
+            [(ngModel)]="selectedUserType" required />
+          <label for="company" class="hidden-toggles__label">Empresa</label>
 
-                    <input type="radio" id="recruiter" name="userType" value="recruiter" class="hidden-toggles__input"
-                        [(ngModel)]="selectedUserType" required />
-                    <label for="recruiter" class="hidden-toggles__label">Reclutador</label>
-                </fieldset>
-                <br />
-                <app-list-errors [errors]="errors"></app-list-errors>
-                <form [formGroup]="authForm" (ngSubmit)="submitForm()" class="needs-validation" novalidate>
-                    <fieldset [disabled]="isSubmitting">
-                        <fieldset class="form-group" *ngIf="authType === 'register'">
-                            <input formControlName="username" placeholder="Nombre de usuario"
-                                class="form-control form-control-lg form-margin" type="text" />
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <input formControlName="email" placeholder="Correo electrónico"
-                                class="form-control form-control-lg form-margin" type="email" />
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <input formControlName="password" placeholder="Contraseña"
-                                class="form-control form-control-lg form-margin" type="password" />
-                        </fieldset>
-                        <button class="btn btn-lg btn-primary btn-block" [disabled]="isSubmitting" type="submit">
-                            Enviar
-                        </button>
-                    </fieldset>
-                </form>
-            </div>
-        </div>
+          <input type="radio" id="recruiter" name="userType" value="recruiter" class="hidden-toggles__input"
+            [(ngModel)]="selectedUserType" required />
+          <label for="recruiter" class="hidden-toggles__label">Reclutador</label>
+        </fieldset>
+        <br />
+        <app-list-errors [errors]="errors"></app-list-errors>
+        <form [formGroup]="authForm" (ngSubmit)="submitForm()">
+          <fieldset [disabled]="isSubmitting">
+            <fieldset class="form-group" *ngIf="authType === 'register'">
+              <input formControlName="username" placeholder="Nombre de usuario"
+                class="form-control form-control-lg form-margin" type="text" />
+              <div *ngIf="authForm.get('username')?.invalid && authForm.get('username')?.touched">
+                <p class="text-danger">El nombre de usuario debe tener entre 6 y 20 caracteres.</p>
+              </div>
+            </fieldset>
+            <fieldset class="form-group">
+              <input formControlName="email" placeholder="Correo electrónico"
+                class="form-control form-control-lg form-margin" type="email" />
+              <div *ngIf="authForm.get('email')?.invalid && authForm.get('email')?.touched">
+                <p class="text-danger">El correo electrónico debe ser válido y tener un formato correcto.</p>
+              </div>
+            </fieldset>
+            <fieldset class="form-group">
+              <input formControlName="password" placeholder="Contraseña"
+                class="form-control form-control-lg form-margin" type="password" />
+              <div *ngIf="authForm.get('password')?.invalid && authForm.get('password')?.touched">
+                <p class="text-danger">La contraseña debe tener entre 6 y 20 caracteres.</p>
+              </div>
+            </fieldset>
+            <br>
+            <button class="btn btn-lg btn-primary btn-block" [disabled]="isSubmitting || authForm.invalid"
+              type="submit">
+              Enviar
+            </button>
+          </fieldset>
+        </form>
+      </div>
     </div>
+  </div>
 </div>

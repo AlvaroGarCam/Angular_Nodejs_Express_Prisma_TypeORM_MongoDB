@@ -1,192 +1,36 @@
-/* Colors */
-.white {
-     color: #fff;
-}
-
-.black {
-     color: #000;
-}
-
-.grey {
-     color: #595959;
-}
-
-.grey-dark {
-     color: #2b2b2b;
-}
-
-.grey-light {
-     color: #eee;
-}
-
-.green {
-     color: #86c023;
-}
-
-.blue {
-     color: #017ac7;
-}
-
-/* Transition */
-.duration {
-     transition-duration: 400ms;
-}
-
-.easing {
-     transition-timing-function: ease;
-}
-
-/* Reset */
-html,
-body {
-     font-family: sans-serif;
-}
-
-a {
-     text-decoration: none;
-}
-
-/* Pagination */
-.pagination-wrapper {
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     margin: 40px 0;
-     width: 100%;
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .pagination {
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     height: 70px;
-     margin-top: 70px;
-     padding: 0 25px;
-     border-radius: 35px;
-     background-color: #f8f9fa;
-     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-@media only screen and (min-width: 120px) and (max-width: 767px) {
-     .pagination {
-          height: 50px;
-          margin-top: 50px;
-          padding: 0 10px;
-          border-radius: 25px;
-     }
+.page-item.active .page-link {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: white;
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
-     .pagination {
-          height: 50px;
-          margin-top: 50px;
-          padding: 0 10px;
-          border-radius: 25px;
-     }
+.page-link {
+  color: #007bff;
+  border: 1px solid #dee2e6;
+  margin: 0 5px;
 }
 
-@media only screen and (min-width: 120px) and (max-width: 1024px) {
-     .pagination {
-          height: 50px;
-          margin-top: 50px;
-          padding: 0 10px;
-          border-radius: 25px;
-     }
+.page-link:hover {
+  background-color: #e9ecef;
+  color: #0056b3;
 }
 
-@media only screen and (min-width: 1025px) {
-     .pagination {
-          height: 70px;
-          margin-top: 70px;
-          padding: 0 25px;
-          border-radius: 35px;
-     }
-}
-
-.page-numbers {
-     color: #595959;
-     text-decoration: none;
-     cursor: pointer;
-     transition: background-color 0.3s, color 0.3s;
-     display: block;
-     padding: 10px 20px;
-     margin: 0 5px;
-     border-radius: 5px;
-     font-size: 18px;
-     line-height: 1.5;
-}
-
-.page-numbers:hover {
-     background-color: #017ac7;
-     color: #fff;
-}
-
-.page-numbers.disabled {
-     color: #ccc;
-     cursor: not-allowed;
-}
-
-.page-numbers.current {
-     font-weight: bold;
-     background-color: #017ac7;
-     color: #fff;
-}
-
-.page-numbers.prev,
-.page-numbers.next {
-     font-size: 16px;
-     padding: 10px 15px;
-}
-
-.page-numbers.prev:hover,
-.page-numbers.next:hover {
-     background-color: #017ac7;
-     color: #fff;
-}
-
-@media only screen and (min-width: 120px) and (max-width: 767px) {
-     .page-numbers {
-          padding: 5px 10px;
-          font-size: 14px;
-     }
-}
-
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
-     .page-numbers {
-          padding: 5px 10px;
-          font-size: 14px;
-     }
-}
-
-@media only screen and (min-width: 120px) and (max-width: 1024px) {
-     .page-numbers {
-          padding: 5px 10px;
-          display: none;
-     }
-
-     .page-numbers:nth-of-type(2) {
-          position: relative;
-          padding-right: 30px;
-     }
-
-     .page-numbers:nth-of-type(2)::after {
-          content: '...';
-          position: absolute;
-          font-size: 20px;
-          top: 0;
-          left: 25px;
-     }
-
-     .page-numbers:nth-child(-n+3),
-     .page-numbers:nth-last-child(-n+3) {
-          display: block;
-     }
-
-     .page-numbers:nth-last-child(-n+4) {
-          padding-right: 10px;
-     }
-
-     .page-numbers:nth-last-child(-n+4)::after {
-          content: none;
-     }
+.page-item.disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
+  background-color: #fff;
+  border-color: #dee2e6;
 }

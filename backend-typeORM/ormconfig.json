@@ -1,0 +1,15 @@
+{
+    "type": "mongodb",
+<<<<<<< HEAD:backend-typeORM/ormconfig.json
+    "url": "mongodb://mongo:27017/InfoJobs",
+=======
+    "url": "mongodb://mongo:27017/info-jobs",
+>>>>>>> cfb83b81cafe6e639d10cff8b02125cbf296b528:backend_typeORM/ormconfig.json
+    "useNewUrlParser": true,
+    "useUnifiedTopology": true,
+    "entities": [
+        "src/**/*.entity.ts"
+    ],
+    "synchronize": true,
+    "logging": true
+}

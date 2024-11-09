@@ -1,14 +1,19 @@
-<div class="card custom-card shadow-lg border-primary">
-    <a [routerLink]="['/shop/categories/', categories.slug]" class="card-img-tiles" data-abc="true">
-        <div class="inner">
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 mb-4 d-flex justify-content-center" *ngIf="category">
+      <div class="card h-100 shadow-sm bg-light fixed-card">
+        <a class="card-img-tiles" data-abc="true">
+          <div class="inner">
             <div class="main-img">
-                <img src="{{categories.image}}" alt="Category" class="img-fluid rounded-top">
+              <img class="img-fluid mx-auto d-block fixed-img" src="{{category.image}}" alt="{{category.category_name}}" />
             </div>
+          </div>
+        </a>
+        <div class="card-body text-center fixed-body">
+          <h4 class="card-title">{{category.category_name}}</h4>
+          <a [routerLink]="['/shop/categories/', category.slug]" class="text-primary" data-abc="true">Ver más</a>
         </div>
-    </a>
-    <div class="card-body text-center">
-        <h4 class="card-title">{{categories.category_name}}</h4>
-        <a class="btn btn-outline-primary btn-sm" [routerLink]="['/shop/categories/', categories.slug]"
-            data-abc="true">View Offers</a>
+      </div>
     </div>
+  </div>
 </div>

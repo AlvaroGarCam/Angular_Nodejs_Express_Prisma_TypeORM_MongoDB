@@ -1,72 +1,42 @@
-.height {
-    height: 100vh;
+.container.subheader {
+  /* background-color: #f8f9fa;  */
+  /* padding: 20px; */
+  border-radius: 10px;
+  margin-top: 20px;
 }
-
 
 .search {
-    position: relative;
-    box-shadow: #1E262D;
-    width: 100%;
-    margin-top: 20px;
-}
-
-.search input {
-    border-radius: 10px;
-    height: 60px;
-    text-indent: 15px;
-    border: 2px solid #004085;
-    width: 50%;
-
-    /* Hacer que el input ocupe el 100% del ancho de su contenedor */
-
-}
-
-.subheader {
-    max-width: 80%;
-    /* Ajusta el ancho máximo según tus preferencias */
-    margin: 0 auto;
-    /* Centra el contenido en la página */
-    text-align: center;
-    /* Alinea el texto al centro dentro de la clase */
-}
-
-.search input:focus {
-
-    box-shadow: none;
-    border: 2px solid rgb(0, 0, 0);
-
-
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .search .fa-search {
-
-    position: absolute;
-    top: 20px;
-    left: 16px;
-
+  margin-right: 10px;
+  color: #6c757d;
 }
 
-
-
-.subheader {
-    margin-top: 20px;
+.search .input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 5px 10px;
+  font-size: 1rem;
 }
 
-.search-form .input-group {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
+.search .input::placeholder {
+  color: #6c757d;
 }
 
-.search-form .input-group-text {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+.search .btn {
+  margin-left: 10px;
 }
 
-.search-form .form-control {
-    border: none;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+.search .fas.fa-search {
+  margin-left: 10px;
+  color: #6c757d;
 }

@@ -35,8 +35,8 @@ export class AuthComponent implements OnInit {
   ) {
     // use FormBuilder to create a form group
     this.authForm = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
     });
   }
 
@@ -45,7 +45,7 @@ export class AuthComponent implements OnInit {
       this.authType = data[data.length - 1].path;
       this.title = this.authType === 'login' ? 'Iniciar sesión' : 'Registrarse';
       if (this.authType === 'register') {
-        this.authForm.addControl('username', new FormControl());
+        this.authForm.addControl('username', new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]));
       }
       this.cd.markForCheck();
     });
@@ -55,6 +55,8 @@ export class AuthComponent implements OnInit {
     this.isSubmitting = true;
     this.errors = [];
     const credentials = this.authForm.value;
+
+    // console.log('Form credentials:', credentials);
 
     let authObservable: Observable<any>;
 
@@ -76,12 +78,17 @@ export class AuthComponent implements OnInit {
 
     authObservable.subscribe({
       next: (response) => {
-        console.log('Auth response:', response);
-        const token = response?.user?.token || response?.token;
-        const decodedToken: any = jwtDecode(token);
-        console.log('Decoded token:', decodedToken);
-        if (decodedToken && decodedToken.typeuser) {
-          this.userTypeService.setUserType(decodedToken.typeuser);
+        // console.log('Auth response:', response);
+
+        if (this.authType === 'login') {
+          const token = response?.user?.token || response?.token;
+          const decodedToken: any = jwtDecode(token);
+
+          // console.log('Decoded token:', decodedToken);
+
+          if (decodedToken && decodedToken.typeuser) {
+            this.userTypeService.setUserType(decodedToken.typeuser);
+          }
         }
 
         Swal.fire({
@@ -91,6 +98,7 @@ export class AuthComponent implements OnInit {
         }).then(() => {
           if (this.authType === 'login') {
             this.router.navigateByUrl('/home');
+            window.location.reload();
           } else {
             this.router.navigateByUrl('/login');
           }

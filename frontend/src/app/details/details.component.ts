@@ -1,71 +1,92 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { Job } from '../core/models/job.model';
-import { Jobservice } from '../core/services/job.service';
+import { JobService } from '../core/services/job.service';
+import { UserService } from '../core/services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Comment } from '../core/models/comment.model';
+import Swal from 'sweetalert2';
 
 @Component({
-    selector: 'app-details',
-    templateUrl: './details.component.html',
-    styleUrls: ['./details.component.css']
+  selector: 'app-details',
+  templateUrl: './details.component.html',
+  styleUrls: ['./details.component.css'],
 })
-
 export class DetailsComponent implements OnInit {
+  job!: Job;
+  slug!: string | null;
+  selectedComment: Comment | null = null;
+  isApplying: boolean = false; // Nueva propiedad
 
-    job!: Job;
-    slug!: string | null;
-    selectedComment!: Comment | null;
+  constructor(
+    private JobService: JobService,
+    private UserService: UserService,
+    private ActivatedRoute: ActivatedRoute,
+    private router: Router
+  ) { }
 
-    constructor(
-        private route: ActivatedRoute,
-        private jobService: Jobservice,
-        private router: Router,
-    ) { }
+  ngOnInit(): void {
+    this.slug = this.ActivatedRoute.snapshot.paramMap.get('slug');
+    // console.log(this.slug);
+    this.get_job();
+  }
 
-    ngOnInit(): void {
-        this.route.data.subscribe(
-            (data: any) => {
-                console.log('Datos recibidos del resolver:', data); // Log adicional
-                if (data && data.job && data.job.jobs) {
-                    this.slug = data.job.jobs.slug;
-                    this.job = data.job.jobs;
-                } else {
-                    console.log('No se encontraron datos del trabajo');
-                    this.router.navigate(['/']);
-                }
-            },
-            (error) => {
-                console.error('Error al obtener los detalles del trabajo:', error);
-                this.router.navigate(['/']);
-            }
-        );
+  get_job() {
+    if (typeof this.slug === 'string') {
+      this.JobService.get_job(this.slug).subscribe((data: any) => {
+        this.job = data.jobs;
+        // console.log(this.job);
+      });
+    } else {
+      // console.log('fallo al encontrar el job');
+      this.router.navigate(['/']);
     }
+  }
 
-    getJob() {
-        if (typeof this.slug === 'string') {
-            this.jobService.get_job(this.slug).subscribe((data: any) => {
-                this.job = data.jobs;
-            });
-        } else {
-            this.router.navigate(['/']);
+  applyForJob() {
+    // console.log('Applying for job', this.job.id);
+    if (this.job && this.job.id) {
+      this.isApplying = true;
+      this.UserService.applyForJob(this.job.id).subscribe(
+        (response) => {
+          // console.log('Application successful', response);
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'You have successfully applied for the job.',
+          });
+        },
+        (error) => {
+          console.error('Application failed', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error.message || 'An error occurred while applying for the job.',
+          });
+          this.isApplying = false;
         }
+      );
     }
+  }
 
-    onToggleFavorite(favorited: boolean) {
-        this.job.favorited = favorited;
+  onToggleFavorite(favorited: boolean) {
+    this.job.favorited = favorited;
 
-        if (favorited) {
-            this.job.favoritesCount++;
-        } else {
-            this.job.favoritesCount--;
-        }
+    if (favorited) {
+      this.job.favoritesCount++;
+    } else {
+      this.job.favoritesCount--;
     }
+  }
 
-    onEditComment(comment: Comment) {
-        this.selectedComment = comment;
-    }
+  onEditComment(comment: Comment) {
+    this.selectedComment = comment;
+  }
 
-    onSubmitComment() {
-        this.selectedComment = null;
-    }
+  onSubmitComment() {
+    this.selectedComment = null;
+  }
+
+  convertCompanyNameToUrl(companyName: string): string {
+    return companyName.replace(/\s+/g, '-');
+  }
 }

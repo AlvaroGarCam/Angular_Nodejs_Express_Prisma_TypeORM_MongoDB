@@ -12,6 +12,7 @@ import { CardCategoryComponent } from './card-category/card-category.component';
 // JOBS
 import { ListJobsComponent } from '../shared/list-jobs/list-jobs.component';
 import { CardJobComponent } from '../shared/card-job/card-job.component';
+import { CardJobCompanyComponent } from '../shared/card-job-company/card-job-company.component';
 
 //ERRORS
 import { ListErrorsComponent } from '../shared/list-errors/list-errors.component';
@@ -24,47 +25,50 @@ import { FiltersComponent } from './filters/filters.component';
 import { SearchComponent } from './search/search.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { ShowAuthedDirective } from './show-authed.directive';
-import { FavoriteButtonComponent } from './buttons/favorite-button.component';
+import { FavoriteButtonComponent } from './favorite-button/favorite-button.component';
 
 @NgModule({
-     imports: [
-          CommonModule,
-          FormsModule,
-          ReactiveFormsModule,
-          HttpClientModule,
-          RouterModule,
-          NgbModule,
-          InfiniteScrollModule,
-     ],
-     declarations: [
-          ListCategoriesComponent,
-          ListJobsComponent,
-          CardCategoryComponent,
-          CardJobComponent,
-          CarouselItemsComponent,
-          CarouselComponent,
-          FiltersComponent,
-          SearchComponent,
-          PaginationComponent,
-          ShowAuthedDirective,
-          ListErrorsComponent,
-          FavoriteButtonComponent
-     ],
-     exports: [
-          FormsModule,
-          ReactiveFormsModule,
-          ListCategoriesComponent,
-          ListJobsComponent,
-          CardCategoryComponent,
-          CardJobComponent,
-          CarouselItemsComponent,
-          CarouselComponent,
-          FiltersComponent,
-          SearchComponent,
-          PaginationComponent,
-          ShowAuthedDirective,
-          ListErrorsComponent,
-          FavoriteButtonComponent
-     ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    RouterModule,
+    NgbModule,
+    InfiniteScrollModule,
+  ],
+  declarations: [
+    ListCategoriesComponent,
+    ListJobsComponent,
+    CardCategoryComponent,
+    CardJobComponent,
+    CardJobCompanyComponent,
+    CarouselItemsComponent,
+    CarouselComponent,
+    FiltersComponent,
+    SearchComponent,
+    PaginationComponent,
+    ShowAuthedDirective,
+    ListErrorsComponent,
+    FavoriteButtonComponent,
+
+  ],
+  exports: [
+    FormsModule,
+    ReactiveFormsModule,
+    ListCategoriesComponent,
+    ListJobsComponent,
+    CardCategoryComponent,
+    CardJobComponent,
+    CardJobCompanyComponent,
+    CarouselItemsComponent,
+    CarouselComponent,
+    FiltersComponent,
+    SearchComponent,
+    PaginationComponent,
+    ShowAuthedDirective,
+    ListErrorsComponent,
+    FavoriteButtonComponent,
+  ],
 })
 export class SharedModule { }

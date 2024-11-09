@@ -7,4 +7,3 @@ export interface CarouselHome {
   export interface CarouselDetails {
     images?: String;
   }
-  

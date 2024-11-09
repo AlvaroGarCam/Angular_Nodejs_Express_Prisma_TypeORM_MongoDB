@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DetailsComponent } from './details.component';
 import { DetailsRoutingModule } from './details-routing.module';
-import { SharedModule } from '../shared/shared.module';
 import { FormCommentComponent } from './form-comment/form-comment.component';
 import { ListCommentComponent } from './list-comment/list-comment.component';
+import { SharedModule } from '../shared';
 
 @NgModule({
     imports: [
@@ -15,7 +15,7 @@ import { ListCommentComponent } from './list-comment/list-comment.component';
     declarations: [
         DetailsComponent,
         FormCommentComponent,
-        ListCommentComponent
+        ListCommentComponent,
     ],
     providers: [
     ],

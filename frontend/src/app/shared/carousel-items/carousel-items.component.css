@@ -1,65 +1,25 @@
-/* Estilo para suavizar las esquinas del carrusel */
-ngb-carousel {
-    border-radius: 10px;
-    /* Ajusta el valor según sea necesario */
-    overflow: hidden;
-    /* Asegura que las esquinas de los elementos internos también se recorten */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Añade una sombra para un efecto más elegante */
-    max-width: 700px;
-    margin: 50px auto;
+.carousel {
+  background-color: #1e262d;
+  min-height: 500px; 
+  min-width: 500px;
 }
 
-/* Estilo para suavizar las esquinas de las imágenes */
+.carousel .carousel-caption {
+  background: rgba(0, 0, 0, 0.5); 
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.carousel .carousel-caption h3 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.carousel .carousel-caption .btn {
+  margin-top: 1rem;
+}
+
 .img_carousel {
-    /* Ajusta el valor según sea necesario */
-    width: 100%;
-    /* Asegura que las imágenes ocupen todo el ancho del contenedor */
-    height: auto;
-    /* Mantiene la proporción de las imágenes */
-    display: block;
-    margin: 0 auto;
-    /* Centra las imágenes horizontalmente */
-    object-fit: cover;
-    /* Asegura que las imágenes cubran todo el contenedor sin distorsionarse */
-}
-
-/* Centrar el contenido del carrusel */
-.contenedor {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 60vh;
-    /* Ajusta la altura según sea necesario */
-    text-align: center;
-}
-
-/* Estilo para los textos del carrusel */
-.carousel-caption {
-    background-color: rgba(0, 0, 0, 0.5);
-    /* Fondo semitransparente para mejorar la legibilidad */
-    border-radius: 5px;
-    /* Suaviza las esquinas del fondo del texto */
-    padding: 10px;
-    color: white;
-}
-
-/* Transición suave para las imágenes */
-.img_carousel {
-    transition: transform 0.3s ease-in-out;
-}
-
-.img_carousel:hover {
-    transform: scale(1.05);
-    /* Aumenta ligeramente el tamaño de la imagen al pasar el ratón por encima */
-}
-
-/* Transición suave para los textos */
-.carousel-caption {
-    transition: opacity 0.3s ease-in-out;
-}
-
-.carousel-caption:hover {
-    opacity: 0.8;
-    /* Reduce ligeramente la opacidad del texto al pasar el ratón por encima */
+  max-height: 500px;
+  object-fit: cover;
 }

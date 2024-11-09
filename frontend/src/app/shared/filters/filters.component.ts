@@ -9,22 +9,24 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-filters',
   templateUrl: './filters.component.html',
-  styleUrls: ['./filters.component.css']
+  styleUrls: ['./filters.component.css'],
 })
-
 export class FiltersComponent implements OnInit {
-
   @Input() listCategories: Category[] = [];
   @Output() eventofiltros: EventEmitter<Filters> = new EventEmitter();
 
   routeFilters: string | null = null;
-  filters!: Filters
+  filters!: Filters;
 
-  id_cat: string = "";
+  id_cat: string = '';
   salary_max: number | undefined;
   salary_min: number | undefined;
 
-  constructor(private ActivatedRoute: ActivatedRoute, private Router: Router, private Location: Location) {
+  constructor(
+    private ActivatedRoute: ActivatedRoute,
+    private Router: Router,
+    private Location: Location
+  ) {
     this.routeFilters = this.ActivatedRoute.snapshot.paramMap.get('filters');
   }
 
@@ -34,33 +36,41 @@ export class FiltersComponent implements OnInit {
   }
 
   public filter_jobs() {
-
     this.routeFilters = this.ActivatedRoute.snapshot.paramMap.get('filters');
     // console.log(this.routeFilters);
 
     if (this.routeFilters != null) {
-      this.filters = new Filters();
-      this.filters = JSON.parse(atob(this.routeFilters));
-      console.log(this.filters.category);
+        this.filters = JSON.parse(atob(this.routeFilters));
+        // console.log(this.filters.category);
     } else {
-      this.filters = new Filters();
-    }
-    if (this.id_cat) {
-      this.filters.category = this.id_cat;
+        this.filters = new Filters();
     }
 
-    this.salary_calc(this.salary_min, this.salary_max);
-    this.filters.salary_min = this.salary_min ? this.salary_min : undefined;
-    this.filters.salary_max = this.salary_max == 0 || this.salary_max == null ? undefined : this.salary_max;
+    // Asignar los filtros si existen
+    if (this.id_cat) this.filters.category = this.id_cat;
+    if (this.salary_min != null) this.filters.salary_min = this.salary_min;
+    if (this.salary_max != null && this.salary_max !== 0) this.filters.salary_max = this.salary_max;
 
+    // Limpieza de valores `null` o `undefined` en el objeto `filters`
+    this.filters = Object.keys(this.filters)
+        .filter(key => this.filters[key] !== undefined && this.filters[key] !== null)
+        .reduce((obj, key) => {
+            obj[key] = this.filters[key];
+            return obj;
+        }, {} as Filters);
+
+    // Actualizar la URL sin parámetros vacíos
     setTimeout(() => {
-      this.Location.replaceState('/shop/' + btoa(JSON.stringify(this.filters)));
-      this.eventofiltros.emit(this.filters);
+        const urlFilters = btoa(JSON.stringify(this.filters));
+        this.Location.replaceState(`/shop/${urlFilters}`);
+        this.eventofiltros.emit(this.filters);
     }, 200);
+}
 
-  }
-
-  public salary_calc(salary_min: number | undefined, salary_max: number | undefined) {
+  public salary_calc(
+    salary_min: number | undefined,
+    salary_max: number | undefined
+  ) {
     if (typeof salary_min == 'number' && typeof salary_max == 'number') {
       if (salary_min > salary_max) {
         this.salary_min = salary_min;
@@ -73,14 +83,16 @@ export class FiltersComponent implements OnInit {
   }
 
   public remove_filters() {
-    window.location.assign("http://localhost:4200/shop")
-    this.filters.category && this.id_cat === "";
+    window.location.assign('http://localhost:4200/shop');
+    this.filters.category && this.id_cat === '';
     this.filters.salary_min = undefined;
     this.filters.salary_max = undefined;
   }
 
   Highlights() {
-    let routeFilters = JSON.parse(atob(this.ActivatedRoute.snapshot.paramMap.get('filters') || ''));
+    let routeFilters = JSON.parse(
+      atob(this.ActivatedRoute.snapshot.paramMap.get('filters') || '')
+    );
 
     if (routeFilters.search == undefined) {
       this.id_cat = routeFilters.category || '';

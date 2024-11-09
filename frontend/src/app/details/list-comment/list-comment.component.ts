@@ -3,89 +3,76 @@ import { Subscription } from 'rxjs';
 import { Comment } from '../../core/models/comment.model';
 import { User } from '../../core/models/user.model';
 import { UserService } from '../../core/services/user.service';
-import { CommentsService } from '../../core/services/comment.service';
+import { CommentService } from '../../core/services/comment.service';
 
 @Component({
-     selector: 'app-list-comment',
-     templateUrl: './list-comment.component.html',
-     styleUrls: ['./list-comment.component.css'],
+    selector: 'app-list-comment',
+    templateUrl: './list-comment.component.html',
+    styleUrls: ['./list-comment.component.css'],
 })
 export class ListCommentComponent implements OnInit, OnDestroy {
 
-     @Input() slug!: string;
-     comments: Comment[] = [];
-     @Output() editComment = new EventEmitter<Comment>();
-     @Output() createCommentEvent = new EventEmitter<void>();
+    @Input() slug!: string;
+    comments: Comment[] = [];
+    @Output() editComment = new EventEmitter<Comment>();
+    @Output() createCommentEvent = new EventEmitter<void>();
 
-     subscription!: Subscription;
-     currentUser!: User;
-     authSubscription!: Subscription;
-     isAddingComment: boolean = false;
-     isAuthenticated: boolean = false;
+    subscription!: Subscription;
+    currentUser!: User | null;
+    isAddingComment: boolean = false;
 
-     constructor(
-          private userService: UserService,
-          private commentsService: CommentsService,
-          private cd: ChangeDetectorRef
-     ) { }
+    constructor(
+        private userService: UserService,
+        private commentService: CommentService,
+        private cd: ChangeDetectorRef
+    ) { }
 
-     ngOnInit() {
-          this.loadComments();
-          this.subscription = this.userService.currentUser.subscribe(
-               (userData: User) => {
+    ngOnInit() {
+        this.loadComments();
+        this.subscription = this.userService.currentUser.subscribe(
+            (userData: User) => {
+                if (userData && Object.keys(userData).length > 0) {
                     this.currentUser = userData;
+                    // console.log(this.currentUser);
                     this.cd.markForCheck();
-               }
-          );
-          this.authSubscription = this.userService.isAuthenticated.subscribe(
-               (isAuthenticated: boolean) => {
-                    this.isAuthenticated = isAuthenticated;
-                    this.cd.markForCheck();
-               }
-          );
-     }
+                } else {
+                    this.currentUser = null;
+                }
+            }
+        );
+    }
 
-     ngOnDestroy() {
-          if (this.subscription) {
-               this.subscription.unsubscribe();
-          }
-     }
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
 
-     loadComments() {
-          this.commentsService.getAll(this.slug).subscribe((comments: Comment[]) => {
-               this.comments = comments;
-               this.cd.markForCheck();
-          });
-     }
+    loadComments() {
+        this.commentService.getAll(this.slug).subscribe((comments: Comment[]) => {
+            this.comments = comments;
+            // console.log(this.comments);
+            this.cd.markForCheck();
+        });
+    }
 
-     canModify(comment: Comment): boolean {
-          return this.currentUser.username === comment.author.username;
-     }
+    canModify(comment: Comment): boolean {
+        return this.currentUser?.username === comment.author.username;
+    }
 
-     createComment() {
-          this.createCommentEvent.emit();
-     }
+    createComment() {
+        this.createCommentEvent.emit();
+    }
 
-     deleteClicked(comment: Comment) {
-          this.commentsService.destroy(comment.id, this.slug).subscribe(() => {
-               this.comments = this.comments.filter(c => c.id !== comment.id);
-          });
-     }
+    deleteClicked(comment: Comment) {
+        this.commentService.delete(comment.id, this.slug).subscribe(() => {
+            this.comments = this.comments.filter(c => c.id !== comment.id);
+        });
+    }
 
-     editClicked(comment: Comment) {
-          this.editComment.emit(comment);
-     }
+    editClicked(comment: Comment) {
+        this.editComment.emit(comment);
+    }
 
-     hasWrittenComment(): boolean {
-          return this.comments.some(comment => this.canModify(comment));
-     }
-
-     showCommentForm() {
-          this.isAddingComment = true;
-     }
-
-     onCommentSubmitted() {
-          this.isAddingComment = false;
-          this.loadComments();
-     }
+    onCommentSubmitted() {
+        this.loadComments();
+    }
 }

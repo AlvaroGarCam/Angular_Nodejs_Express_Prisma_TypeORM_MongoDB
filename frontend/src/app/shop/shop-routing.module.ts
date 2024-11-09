@@ -17,12 +17,11 @@ const routes: Routes = [
     path: ':filters',
     component: ShopComponent,
     resolve: {},
-  }
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-
 export class ShopRoutingModule {}

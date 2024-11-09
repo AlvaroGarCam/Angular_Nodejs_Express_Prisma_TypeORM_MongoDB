@@ -1,149 +1,73 @@
-.main {
-     background-color: #f8f9fa;
+.profile-page, .company-dashboard-page {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.user-card {
-     max-width: 600px;
-     margin: 0 auto;
-     border: 1px solid #ddd;
-     border-radius: 10px;
-     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-     background-color: #f8f9fa;
+.profile-sidebar {
+    background-color: #ffffff;
+    padding: 20px;
+    /* border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
 }
 
-.user-image {
-     width: 250px;
-     height: 250px;
-     object-fit: cover;
-     border: 3px solid white;
+.user-info {
+    margin-bottom: 20px;
 }
 
-.card-title {
-     font-size: 1.75rem;
-     font-weight: bold;
-     color: #343a40;
+.user-photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-bottom: 10px;
 }
 
-.card-text {
-     font-size: 1rem;
-     color: #555;
+.user-name {
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
-.favorite-jobs {
-     margin-top: 1rem;
+.user-following, .user-followers {
+    font-size: 1rem;
+    color: #666;
 }
 
-.job-cards {
-     display: flex;
-     flex-wrap: wrap;
-     justify-content: center;
+.profile-nav .nav-link {
+    font-size: 1.2rem;
+    color: #007bff;
+    padding: 10px;
+    cursor: pointer;
 }
 
-.job-card {
-     background-color: #fff;
-     border: 1px solid #ddd;
-     border-radius: 5px;
-     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-     margin: 0.5rem;
-     padding: 1rem;
-     width: 150px;
-     text-align: center;
+.profile-nav .nav-link:hover {
+    text-decoration: underline;
 }
 
-.job-card h6 {
-     font-size: 1rem;
-     font-weight: bold;
-     color: #007bff;
+.profile-content {
+    background-color: #ffffff;
+    padding: 20px;
+    /* border-radius: 10px; */
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
 }
 
-.job-card p {
-     font-size: 0.875rem;
-     color: #555;
+.profile-content h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
-.btn-primary {
-     background-color: #007bff;
-     border-color: #007bff;
+.profile-details-item {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #333;
 }
 
-.btn-danger {
-     background-color: #dc3545;
-     border-color: #dc3545;
+.profile-details-item strong {
+    font-weight: bold;
 }
 
-.mt-3 {
-     margin-top: 1rem;
-}
-
-.mt-5 {
-     margin-top: 3rem;
-}
-
-.mb-5 {
-     margin-bottom: 3rem;
-}
-
-.p-3 {
-     padding: 1rem;
-}
-
-.py-5 {
-     padding-top: 3rem;
-     padding-bottom: 3rem;
-}
-
-.text-center {
-     text-align: center;
-}
-
-.text-right {
-     text-align: right;
-}
-
-.rounded {
-     border-radius: 0.25rem;
-}
-
-.bg-white {
-     background-color: #fff;
-}
-
-.border-right {
-     border-right: 1px solid #ddd;
-}
-
-.labels {
-     font-weight: bold;
-     color: #333;
-}
-
-.profile-button {
-     width: 100%;
-}
-
-.profile-header {
-     background-color: #f8f9fa;
-     padding: 20px;
-     border-radius: 10px;
-     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-     text-align: center;
-}
-
-.profile-header .user-image {
-     width: 200px;
-     height: 200px;
-     object-fit: cover;
-     border: 3px solid #007bff;
-}
-
-.profile-header .card-title {
-     font-size: 2rem;
-     color: #343a40;
-     margin-top: 10px;
-}
-
-.profile-header .card-text {
-     font-size: 1.3rem;
-     color: #6c757d;
-     margin-top: 5px;
+.active {
+    background-color: #b1b1b13d;
+    color: #ffffff;
 }

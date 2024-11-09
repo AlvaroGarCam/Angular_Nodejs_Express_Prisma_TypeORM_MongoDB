@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryService } from '../../core/services/category.service';
-import { Category } from '../../core/models/category.model';
+import { CategoryService } from '../../core/services/category.service'
+import { Category } from 'src/app/core/models/category.model';
+import { Offset } from 'popper.js';
 
 @Component({
   selector: 'app-list-categories',
@@ -8,44 +9,39 @@ import { Category } from '../../core/models/category.model';
   styleUrls: ['./list-categories.component.css']
 })
 export class ListCategoriesComponent implements OnInit {
-
+  
   offset = 0;
   limit = 3;
   categories: Category[] = [];
-  hasMore = true; // Bandera para indicar si hay más categorías para cargar
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private CategoryService: CategoryService) { }
+
+  //INICIA 
 
   ngOnInit(): void {
     this.getCategories();
   }
 
+  // TOTES LES CATEGORIES
   getCategories() {
-    if (!this.hasMore) return; // Si no hay más categorías, no hacer nada
-
     const params = this.getRequestParams(this.offset, this.limit);
-
-    this.categoryService.all_categories(params).subscribe(
+    // console.log(params);
+    
+    this.CategoryService.all_categories(params).subscribe(
       (data: any) => {
-        const newCategories = data.categories;
-        this.categories = [...this.categories, ...newCategories]; // Agregar nuevas categorías al array existente
-        this.offset += this.limit;
-
-        // Si la respuesta contiene menos elementos que el límite, no hay más categorías
-        if (newCategories.length < this.limit) {
-          this.hasMore = false;
-        }
-      },
-      (error) => {
-        console.error('Error loading categories:', error);
+        this.categories = data.categories;
+        this.limit = this.limit + 3;
+        // console.log(this.categories);      
       }
     );
   }
 
-  getRequestParams(offset: number, limit: number): any {
+  getRequestParams(offset: number,limit: number): any{
     let params: any = {};
+
     params[`offset`] = offset;
     params[`limit`] = limit;
+
     return params;
   }
 

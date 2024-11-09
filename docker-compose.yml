@@ -1,7 +1,7 @@
 services:
   mongo:
     image: mongo:5.0
-    container_name: mongo_db
+    container_name: mongo_db_angela
     restart: always
     environment:
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
@@ -16,9 +16,9 @@ services:
 
   backend_mongoose:
     build:
-      context: ./backend
+      context: ./backend-express
       dockerfile: Dockerfile
-    container_name: backend_mongoose
+    container_name: backend_mongoose_angela
     restart: always
     ports:
       - "${PORT_MONGOOSE}:${PORT_MONGOOSE}"
@@ -36,9 +36,9 @@ services:
 
   backend_prisma:
     build:
-      context: ./backend_prisma
+      context: ./backend-prisma
       dockerfile: Dockerfile
-    container_name: backend_prisma
+    container_name: backend_prisma_angela
     restart: always
     environment:
       DATABASE_URL: ${DATABASE_URL_PRISMA}
@@ -53,9 +53,9 @@ services:
 
   backend_typeorm:
     build:
-      context: ./backend_typeorm
+      context: ./backend-typeORM
       dockerfile: Dockerfile
-    container_name: backend_typeorm
+    container_name: backend_typeorm_angela
     restart: always
     environment:
       MONGODB_URL: ${MONGODB_URL_TYPEORM}
@@ -71,7 +71,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: frontend
+    container_name: frontend_angela
     restart: always
     ports:
       - "${PORT_FRONTEND}:${PORT_FRONTEND}"

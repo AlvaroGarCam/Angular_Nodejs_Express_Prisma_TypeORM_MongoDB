@@ -1,0 +1,94 @@
+<div class="recruiter-dashboard-page container mt-5">
+    <div class="row">
+        <!-- Sidebar -->
+        <aside class="col-md-3 dashboard-sidebar">
+            <div class="user-info text-center mb-4">
+                <img class="user-photo mb-2" [src]="recruiter.image" alt="Recruiter Photo">
+                <h3 class="user-name">{{ recruiter.username }}</h3>
+            </div>
+            <nav class="dashboard-nav">
+                <ul class="nav flex-column">
+                    <li class="nav-item" [class.active]="isActive('dashboard')">
+                        <a class="nav-link dashboard" (click)="showDashboard()">
+                            <i class="fas fa-chart-line"></i>&nbsp;&nbsp; Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item" [class.active]="isActive('jobs')">
+                        <a class="nav-link jobs" (click)="showJobs()">
+                            <i class="fas fa-file-signature"></i>&nbsp;&nbsp; Applications
+                        </a>
+                    </li>
+                    <li class="nav-item settings" [class.active]="isActive('settings')">
+                        <a class="nav-link" (click)="showSettings()">
+                            <i class="fas fa-cog"></i>&nbsp;&nbsp; Settings
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="col-md-9 dashboard-content">
+            <!-- Dashboard Overview -->
+            <div *ngIf="currentView === 'dashboard'" class="dashboard-overview">
+                <!-- Cards with statistics -->
+                <div class="row mb-4">
+                    <div class="col-lg-6 col-md-12 mb-3">
+                        <div class="card-stadistic">
+                            <div class="card-body">
+                                <h5 class="card-title">Selecciones en curso</h5>
+                                <p class="card-text">{{ recruiter.jobs.length }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 mb-3">
+                        <div class="card-stadistic">
+                            <div class="card-body">
+                                <h5 class="card-title">Inscripciones Totales</h5>
+                                <p class="card-text">{{ totalApplications }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Section -->
+                <div class="data-section">
+                    <h2>Datos del Reclutador</h2>
+                    <hr>
+                    <p><strong>Nombre del reclutador:</strong> {{ recruiter.username }}</p>
+                    <p><strong>Email:</strong> {{ recruiter.email }}</p>
+                    <p><strong>Estado:</strong> {{ recruiter.busy ? 'Ocupado' : 'Libre' }}</p>
+                </div>
+            </div>
+
+            <!-- Application Section -->
+            <div *ngIf="currentView === 'applications'" class="applications-section">
+                <div class="d-flex justify-content-between align-items-center mb-4 title">
+                    <h2>Mis Procesos de Selección</h2>
+                </div>
+                <div class="job-list">
+                    <div *ngFor="let job of myJobs">
+                        <app-card-application [job]="job" (editInscriptions)="editStatus(job)"></app-card-application>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Candidates Section -->
+            <div *ngIf="currentView === 'candidates'" class="candidates-section">
+                <div class="d-flex justify-content-between align-items-center mb-4 title">
+                    <h2>Candidatos</h2>
+                </div>
+                <div class="candidate-list">
+                    <app-card-candidate [candidates]="selectedJobApplications"></app-card-candidate>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div *ngIf="currentView === 'settings'">
+                <h2>Ajustes del reclutador</h2>
+                <hr>
+                <app-settings-recruiter></app-settings-recruiter>
+            </div>
+        </main>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, } from '@angular/core';
 import { Job } from '../../core/models/job.model';
 
 @Component({
@@ -9,21 +9,19 @@ import { Job } from '../../core/models/job.model';
 
 export class CardJobComponent implements OnInit {
 
-  @Input() jobs: Job = {} as Job;
-
+  @Input() job: Job = {} as Job;
   constructor() { }
 
-  ngOnInit(): void {
-
+  ngOnInit(): void {  
   }
 
   onToggleFavorite(favorited: boolean) {
-    this.jobs.favorited = favorited;
+    this.job.favorited = favorited;
 
     if (favorited) {
-      this.jobs.favoritesCount++;
+      this.job.favoritesCount++;
     } else {
-      this.jobs.favoritesCount--;
+      this.job.favoritesCount--;
     }
   }
 

@@ -1,145 +1,22 @@
-/* REMOVE THIS, USE YOUR OWN  */
-html,
-body {
-     margin: 0;
-     padding: 0;
-     font-family: Arial, Helvetica, Sans-serif;
-     background-color: #070617;
-}
-
-/* STYLES SPECIFIC TO FOOTER  */
-.footer {
-     margin-top: 100px;
-     width: 100%;
-     position: relative;
-     height: auto;
-     background-color: #004085;
-     /* Fondo azul exacto */
-     color: white;
-     padding: 40px 0;
-     text-align: center;
-}
-
-.footer .container {
-     display: flex;
-     flex-wrap: wrap;
-     justify-content: space-around;
-}
-
-.footer .col {
-     flex: 1;
-     margin: 20px;
-     min-width: 200px;
-}
-
 .footer h1 {
-     font-size: 18px;
-     margin-bottom: 20px;
-     color: #f39c12;
-}
-
-/* Estilo bonito y redondeado para las letras */
-.custom-link,
-.custom-header {
-     font-family: 'Arial', sans-serif;
-     font-weight: bold;
-     border-radius: 5px;
-     padding: 5px 10px;
-     transition: background-color 0.3s ease;
-     text-decoration: none;
-}
-
-/* Color azul exacto para los encabezados */
-.custom-header {
-     color: #004085;
-}
-
-/* Efecto hover para los enlaces */
-.custom-link:hover {
-     background-color: rgba(255, 255, 255, 0.2);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .footer ul {
-     list-style-type: none;
-     padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 .footer ul li {
-     margin: 10px 0;
+  margin-bottom: 0.5rem;
 }
 
 .footer ul li a {
-     color: white;
-     text-decoration: none;
+  text-decoration: none;
+  color: inherit;
 }
 
 .footer ul li a:hover {
-     text-decoration: underline;
-}
-
-.footer .social img {
-     width: 32px;
-     margin: 0 10px;
-}
-
-.footer .clearfix {
-     clear: both;
-}
-
-@media only screen and (min-width: 1280px) {
-     .contain {
-          width: 1200px;
-          margin: 0 auto;
-     }
-}
-
-@media only screen and (max-width: 1139px) {
-     .contain .social {
-          width: 1000px;
-          display: block;
-     }
-
-     .social h1 {
-          margin: 0px;
-     }
-}
-
-@media only screen and (max-width: 950px) {
-     .footer .col {
-          width: 33%;
-     }
-
-     .footer .col h1 {
-          font-size: 14px;
-     }
-
-     .footer .col ul li {
-          font-size: 13px;
-     }
-}
-
-@media only screen and (max-width: 500px) {
-     .footer .col {
-          width: 50%;
-     }
-
-     .footer .col h1 {
-          font-size: 14px;
-     }
-
-     .footer .col ul li {
-          font-size: 13px;
-     }
-}
-
-@media only screen and (max-width: 340px) {
-     .footer .col {
-          width: 100%;
-     }
-}
-
-
-.bg-light-blue {
-     background-color: #004085;
-     /* Azul claro */
+  text-decoration: underline;
 }

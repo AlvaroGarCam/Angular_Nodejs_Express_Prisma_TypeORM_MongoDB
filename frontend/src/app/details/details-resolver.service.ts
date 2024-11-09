@@ -1,26 +1,27 @@
-import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Injectable, } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
+import { Observable } from 'rxjs';
+
+import { Job} from '../core/models/job.model';
+import { JobService } from '../core/services/job.service';
+// import { UserService } from '../core/services/user.service';
 import { catchError } from 'rxjs/operators';
-import { Jobservice } from '../core/services/job.service';
-import { Job } from '../core/models/job.model';
 
 @Injectable({
     providedIn: 'root'
 })
-export class DetailsResolver implements Resolve<Job | null> {
-    constructor(private jobService: Jobservice, private router: Router) { }
+export class DetailsResolver implements Resolve<Job> {
+    constructor(
+        private jobService: JobService,
+        private router: Router,
+        // private userService: UserService
+    ) {}
 
     resolve(
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
-    ): Observable<Job | null> {
-        return this.jobService.get_job(route.params['slug']).pipe(
-            catchError((err) => {
-                console.error('Error al obtener el trabajo:', err);
-                this.router.navigateByUrl('/');
-                return of(null);
-            })
-        );
+    ): Observable<any> {
+        return this.jobService.get_job(route.params['slug'])
+        .pipe(catchError((err) => this.router.navigateByUrl('/')));
     }
 }

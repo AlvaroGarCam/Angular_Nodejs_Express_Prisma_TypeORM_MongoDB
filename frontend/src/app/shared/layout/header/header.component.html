@@ -1,77 +1,53 @@
-<div class="container-fluid bg-light-blue text-white py-3 custom-header" *ngIf="!logged">
-     <div class="row align-items-center">
-          <div class="col-md-4 text-center">
-               <div class="logo">
-                    <a routerLink="home" class="text-white display-4 custom-logo">
-                         <img src="../../../../assets/logo/dreamjob_logo.webp" alt="DreamJob Logo" class="logo-img"
-                              width="160px" height="160px">
-                    </a>
-               </div>
-          </div>
-          <div class="col-md-8">
-               <nav class="d-flex justify-content-center">
-                    <ul class="nav nav-links">
-                         <li class="nav-item">
-                              <a routerLink="home" class="nav-link text-white custom-nav-link">
-                                   <h2>Home</h2>
-                              </a>
-                         </li>
-                         <li class="nav-item">
-                              <a routerLink="shop" class="nav-link text-white custom-nav-link">
-                                   <h2>Shop</h2>
-                              </a>
-                         </li>
-                         <li class="nav-item">
-                              <a routerLink="login" class="nav-link text-white custom-nav-link">
-                                   <h2>Log in/ Sign In</h2>
-                              </a>
-                         </li>
-                    </ul>
-               </nav>
-          </div>
-     </div>
-</div>
+<!-- SI NO HAY USUARIO -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" *ngIf="logged === false">
+  <div class="container d-flex justify-content-between">
+    <a class="navbar-brand" routerLink="home">JobAtmosphere</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="shop">Shop</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="login">Log in / Sign In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-<div class="container-fluid bg-light-blue text-white py-3 custom-header" *ngIf="logged">
-     <div class="row align-items-center">
-          <div class="col-md-4 text-center">
-               <div class="logo">
-                    <a routerLink="home" class="text-white display-4 custom-logo">
-                         <img src="../../../../assets/logo/dreamjob_logo.webp" alt="DreamJob Logo" class="logo-img"
-                              width="150px" height="150px">
-                    </a>
-               </div>
-          </div>
-          <div class="col-md-8">
-               <nav class="d-flex justify-content-center">
-                    <ul class="nav nav-links">
-                         <li class="nav-item">
-                              <a routerLink="home" class="nav-link text-white custom-nav-link">
-                                   <h2>Home</h2>
-                              </a>
-                         </li>
-                         <li class="nav-item">
-                              <a routerLink="shop" class="nav-link text-white custom-nav-link">
-                                   <h2>Shop</h2>
-                              </a>
-                         </li>
-                         <li class="nav-item d-flex align-items-center">
-                              <a class="nav-link text-white custom-nav-link" routerLink="profile"
-                                   routerLinkActive="active">
-                                   <img [src]="currentUser.image || 'https://static.productionready.io/images/smiley-cyrus.jpg'"
-                                        *ngIf="currentUser.image" class="user-pic" style="width: 100px; height: 100px;"
-                                        alt="user image" />
-                                   <br>
-                                   <h3 align="center">{{ currentUser.username }}</h3>
-                              </a>
-                         </li>
-                         <li class="nav-item">
-                              <button class="btn btn-danger" (click)="logout()">
-                                   Log out
-                              </button>
-                         </li>
-                    </ul>
-               </nav>
-          </div>
-     </div>
-</div>
+<!-- SI HAY USUARIO -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" *ngIf="logged">
+  <div class="container d-flex justify-content-between">
+    <a class="navbar-brand" routerLink="home">JobAtmosphere</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="home">Home</a>
+        </li>
+        <li class="nav-item" *ngIf="isClient()">
+          <a class="nav-link" routerLink="shop">Shop</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn-link" (click)="onProfileClick()">
+            <img [src]="userImage || 'https://static.productionready.io/images/smiley-cyrus.jpg'" *ngIf="userImage"
+              class="user-pic" style="width: 35px; height: 35px" alt="user image" />
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="logout()">Log out</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
